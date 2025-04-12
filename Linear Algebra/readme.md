@@ -32,6 +32,44 @@ It’s like a set of instructions:
 
 ---
 
+## 🎯 Basis / Unit Vectors
+
+**Basis vectors** are special vectors that:
+- Have a **magnitude of 1**
+- Represent the **direction** of each axis
+
+They are usually written as:
+- `î` → unit vector in the **x-direction**
+- `ĵ` → unit vector in the **y-direction**
+- `k̂` → unit vector in the **z-direction**
+
+---
+
+## 🌌 Span
+
+The **span** of a set of vectors is the collection of all points you can reach using them (by scaling and adding).
+
+- Using `î` and `ĵ`, you can reach any point on a 2D plane → the span is **2D**
+- Using `î`, `ĵ`, and `k̂`, you can reach any point in 3D space → the span is **3D**
+
+---
+
+## 📚 Types of Vectors
+
+### 1. Linearly Dependent Vectors
+These vectors **don’t add a new direction**. They are just scalar multiples of each other and lie on the same line or axis.
+
+> Example: `3î` and `5î` both lie on the x-axis. One is just a longer/shorter version of the other, but no new direction is introduced.
+
+---
+
+### 2. Linearly Independent Vectors
+These vectors **introduce new directions** or dimensions.
+
+> Example: `3î` and `5ĵ` are linearly independent because `î` lies on the x-axis and `ĵ` lies on the y-axis — two different directions.
+
+---
+
 ## ➕✖️ How Do We Add or Multiply Vectors?
 
 ### ➕ **Vector Addition**
@@ -39,6 +77,11 @@ It’s like a set of instructions:
 Adding vectors is just like adding numbers **axis-wise**:
 
 [3, 4] + [5, -2] = [3 + 5, 4 + (-2)] = [8, 2]
+
+
+![Vector Example](./assets/Vector%20Addition1.png)
+
+![Vector Example](./assets/Vector%20Addition2.png)
 
 
 **Visual Interpretation**:  
