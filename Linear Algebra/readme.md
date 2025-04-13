@@ -102,3 +102,45 @@ Multiply each element of the vector by a scalar (just a number):
 
 **In physics terms**:  
 Going `1m` east and `2m` north, 3 times in a row, lands you at `3m` east and `6m` north.
+
+---
+
+## 📐 What is Linear Transformation?
+
+A **linear transformation** is a function that takes vectors as input and transforms them into new vectors, while preserving two key properties:
+
+1. The **origin stays fixed** (no shifting).
+2. **Grid lines remain straight and parallel** (lines stay straight and equally spaced).
+
+Think of it as changing the _rulers_ (basis vectors) you use to measure space, not the space itself.
+
+---
+
+### 🧠 Example:
+
+Let’s say you have a vector:
+
+v = [2, 3]
+
+
+In the **default grid**, this means:
+- Move **2 units along the x-axis** → using the standard basis `[1, 0]`
+- Move **3 units along the y-axis** → using the standard basis `[0, 1]`
+
+Now, apply a **linear transformation** that changes the basis vectors:
+
+- New x-axis basis vector → `i' = [1, -1]`
+- New y-axis basis vector → `j' = [1, 1]`
+
+So instead of building the vector using `[1, 0]` and `[0, 1]`, we now use the new basis:
+
+v' = 2 × [1, -1] + 3 × [1, 1] = [2, -2] + [3, 3] = [5, 1]
+
+
+This means the vector `[2, 3]` is **mapped to** `[5, 1]` under the new grid.
+
+![Vector Transformation](./assets/Vector%20Transformation.png)
+
+---
+
+In short: Linear transformations **reshape the grid**, not the space. They give you a new way to describe and work with vectors!
