@@ -141,6 +141,69 @@ This means the vector `[2, 3]` is **mapped to** `[5, 1]` under the new grid.
 
 ![Vector Transformation](./assets/Vector%20Transformation.png)
 
+In short: Linear transformations **reshape the grid**, not the space. They give you a new way to describe and work with vectors!
+
 ---
 
-In short: Linear transformations **reshape the grid**, not the space. They give you a new way to describe and work with vectors!
+## 🌀 Matrix Composition: Rotating Vectors with Linear Transformations
+
+In linear algebra, transformation matrices can rotate, scale, shear, or reflect vectors. When you apply transformations multiple times, you can **compose** them using matrix multiplication.
+
+### 🔁 One 90° Rotation
+
+The transformation matrix for a **90° counterclockwise rotation** is:
+
+R = [ [ 0, -1 ], [ 1, 0 ] ]
+
+
+### 🔁🔁 Two 90° Rotations (180° Total)
+
+To rotate a vector 90° **twice**, you multiply the rotation matrix by itself:
+
+R × R = [[ 0, -1 ], [[ 0, -1 ], [ 1, 0 ]] × [ 1, 0 ]]
+
+  = [ [-1,  0 ],
+     [ 0, -1 ] ]
+
+
+This result is the matrix for a **180° rotation**, which flips both x and y directions.
+
+### ✅ Conclusion
+
+Matrix multiplication lets us **combine transformations**:
+
+- One 90° rotation ➝ `R`
+- Two 90° rotations ➝ `R × R = 180° rotation`
+- And so on...
+
+By composing matrices, we can stack multiple linear transformations together into one!
+
+## 🔄 Order of Transformations Matters!
+
+When composing transformations using **matrix multiplication**, the **order** in which you multiply them affects the result.
+
+Matrix multiplication is **not commutative**, which means:
+
+A × B ≠ B × A
+
+Let’s say:
+- `R` is a **rotation matrix**
+- `S` is a **shear matrix**
+
+If you rotate then shear:
+Final = S × R (First apply R, then S)
+
+If you shear then rotate:
+Final = R × S (First apply S, then R)
+
+These will generally give **different results**, because the transformation is applied **in sequence**, and each one changes the coordinate system for the next.
+
+### ✅ Exception: Same Matrices
+
+In our previous example:
+R =  [[ 0, -1 ], [ 1, 0 ] ]
+
+We applied the same rotation matrix twice:
+R × R = R² = 180° rotation
+
+Since both matrices were the same, the order didn’t matter **in this special case**. But in general, **always be mindful of the order** when combining transformations!
