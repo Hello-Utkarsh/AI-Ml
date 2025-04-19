@@ -260,3 +260,117 @@ det(A) = a1(b2c3 - b3c2) - a2(b1c3 - b3c1) + a3(b1c2 - b2c1)
 ### Example:
 | 1 0 0 | | 0 2 0 | | 0 0 3 |
 det = 1 × 2 × 3 = 6
+
+---
+
+### 🔄 Inverse Matrices, Column Space, and Null Space
+
+#### 🧼 Inverse Matrix (The Undo Button)
+An **inverse matrix** undoes the effect of a transformation.
+
+🟢 Example:  
+If a transformation rotates a vector **90° clockwise**, the inverse matrix will rotate it **90° counterclockwise**, bringing it back to its original position.
+
+📌 Mathematically:
+If `A` is a matrix and `A⁻¹` is its inverse, then:
+A × A⁻¹ = I
+Where `I` is the **identity matrix** [ [1,0] [0,1] ] (does nothing — like multiplying by 1).
+
+---
+
+#### 🔢 Rank (How Many Dimensions Survive?)
+The **rank** of a matrix tells you how many **independent directions** survive after transformation.
+
+🟢 Example 1:
+If a transformation **flattens** everything onto the x-axis, you lose the y-dimension.  
+✅ Only x-dimension survives → **Rank = 1**
+
+🟢 Example 2:
+If a matrix just **rotates** the 2D space (like 90° rotation), both x and y dimensions stay alive.  
+✅ Both directions stay → **Rank = 2**
+
+📌 In 3D:
+- If all space collapses to a plane → Rank = 2
+- If it collapses to a line → Rank = 1
+- If nothing collapses → Rank = 3
+
+---
+
+#### 🧱 Column Space (All Possible Outputs)
+The **column space** of a matrix is the collection of all **possible outputs** you can get by multiplying the matrix with different input vectors.
+
+🟢 Example:
+If your matrix can transform vectors to reach any point on a plane, then:
+✅ Column space = The whole plane  
+If all outputs lie on a single line →  
+✅ Column space = That line only
+
+Think of column space as:  
+> “Where can this transformation take us?”
+
+---
+
+#### 🕳️ Null Space (What Gets Crushed?)
+The **null space** is the set of all input vectors that get sent to the **zero vector** (i.e., disappear).
+
+🟢 Example:
+If a matrix turns every vector on the y-axis into **[0, 0]**, then:
+✅ All those vectors are in the **null space**  
+They're lost after the transformation — like flattening paper into a line.
+
+📌 If:
+A × x = 0
+
+Then `x` is part of the null space of matrix `A`.
+
+---
+
+### Nonsquare matrices
+
+Not all transformation matrices are square! A **nonsquare matrix** either increases or decreases the number of dimensions during transformation.
+
+#### 🟩 What does a 3×2 Matrix Mean?
+
+A `3 × 2` matrix has:
+- 3 rows → **3D output**
+- 2 columns → **2D input**
+
+It **transforms 2D vectors into 3D vectors**.
+
+**Example:**
+A = [ [2, 0], [-1, 1], [-2, 1] ]
+
+This means the 2D basis vectors `[1, 0]` and `[0, 1]` get mapped into 3D:
+- x-axis → `[2, -1, -2]`
+- y-axis → `[0, 1, 1]`
+
+So a 2D vector like `[3, 1]` becomes:
+A × [3, 1]ᵗ = 3×[2, -1, -2] + 1×[0, 1, 1] = [6, -3, -6] + [0, 1, 1] = [6, -2, -5]
+
+
+This is **useful for lifting lower-dimensional data into a higher-dimensional space**, such as in machine learning or graphics.
+
+---
+
+#### 🟨 What does a 2×3 Matrix Mean?
+
+A `2 × 3` matrix has:
+- 2 rows → **2D output**
+- 3 columns → **3D input**
+
+It **transforms 3D vectors into 2D vectors**.
+
+**Example:**
+A = [ [1, 0, 2], [0, -1, 3] ]
+
+This means:
+- x-axis `[1, 0, 0]` → `[1, 0]`
+- y-axis `[0, 1, 0]` → `[0, -1]`
+- z-axis `[0, 0, 1]` → `[2, 3]`
+
+So a 3D vector like `[1, 2, 1]` becomes:
+A × [1, 2, 1]ᵗ = 1×[1, 0] + 2×[0, -1] + 1×[2, 3] = [1, 0] + [0, -2] + [2, 3] = [3, 1]
+
+This is like **projecting a 3D object onto a 2D plane** — similar to how a camera projects the 3D world onto your screen.
+
+---
