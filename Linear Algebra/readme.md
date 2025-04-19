@@ -145,9 +145,11 @@ In short: Linear transformations **reshape the grid**, not the space. They give 
 
 ---
 
-## 🌀 Matrix Composition: Rotating Vectors with Linear Transformations
+## 🌀 Matrix Composition
 
 In linear algebra, transformation matrices can rotate, scale, shear, or reflect vectors. When you apply transformations multiple times, you can **compose** them using matrix multiplication.
+
+## 2D Matrix
 
 ### 🔁 One 90° Rotation
 
@@ -160,7 +162,7 @@ R = [ [ 0, -1 ], [ 1, 0 ] ]
 
 To rotate a vector 90° **twice**, you multiply the rotation matrix by itself:
 
-R × R = [[ 0, -1 ], [[ 0, -1 ], [ 1, 0 ]] × [ 1, 0 ]]
+R × R = [ [ 0, -1 ], [ [ 0, -1 ], [ 1, 0 ] ] × [ 1, 0 ] ]
 
   = [ [-1,  0 ],
      [ 0, -1 ] ]
@@ -207,3 +209,54 @@ We applied the same rotation matrix twice:
 R × R = R² = 180° rotation
 
 Since both matrices were the same, the order didn’t matter **in this special case**. But in general, **always be mindful of the order** when combining transformations!
+
+---
+
+# 📐 Determinants – Explained Simply
+
+A determinant is a scalar value that can be computed from a square matrix. It gives insight into the transformation properties of a matrix—especially area/volume scaling, invertibility, and orientation (flipping).
+
+---
+
+## 🔷 2D Determinant
+
+Given a 2×2 matrix:
+
+| a b | | c d |
+
+
+The **determinant** is:
+det = ad - bc
+
+
+### What it means:
+- `det = 1`: Area unchanged
+- `det = 2`: Area doubled
+- `det = 0`: Collapsed into a line (not invertible)
+- `det < -2`: Flipped across an axis (mirrored) and scaled 2 times
+
+### Example:
+
+Matrix:
+| 2 1 | | 1 1 |
+det = 2×1 - 1×1 = 1
+
+
+✅ Area stays the same, but the shape gets sheared.
+
+---
+
+## 🔷 3D Determinant
+
+In 3D, the determinant of a 3×3 matrix gives the volume scaling factor of a parallelepiped formed by three vectors.
+
+Given a 3×3 matrix:
+A = | a1  a2  a3 |
+    | b1  b2  b3 |
+    | c1  c2  c3 |
+
+det(A) = a1(b2c3 - b3c2) - a2(b1c3 - b3c1) + a3(b1c2 - b2c1)
+
+### Example:
+| 1 0 0 | | 0 2 0 | | 0 0 3 |
+det = 1 × 2 × 3 = 6
