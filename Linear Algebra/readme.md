@@ -374,3 +374,41 @@ A × [1, 2, 1]ᵗ = 1×[1, 0] + 2×[0, -1] + 1×[2, 3] = [1, 0] + [0, -2] + [2, 
 This is like **projecting a 3D object onto a 2D plane** — similar to how a camera projects the 3D world onto your screen.
 
 ---
+
+### 🔸 Dot Products
+
+The **dot product** is a way to measure how much two vectors "agree" in direction.
+
+Think of it like asking:  
+👉 _"How much of one vector goes in the direction of the other?"_
+
+#### ✅ Simple Rule:
+If you have two vectors **A** and **B**, the dot product is:
+
+A · B = |A| × |B| × cos(θ)
+
+Where:
+- `|A|` and `|B|` are lengths (magnitudes) of the vectors, which is calculated by `|A| = √(x² + y²)`
+- `θ` is the angle between them
+
+#### 📌 Interpretation:
+- **Positive (+)** → Vectors point in **same direction**
+- **Zero (0)** → Vectors are **perpendicular**
+- **Negative (-)** → Vectors point in **opposite direction**
+
+#### 💡 Example:
+Let’s say:
+
+A = [2, 4]  
+B = [3, 1]
+
+**Dot product =** `(2 × 3) + (4 × 1) = 6 + 4 = 10` → positive  
+✅ So the angle between them is **less than 90°**
+
+#### 🔁 Geometric Way to See It:
+
+Imagine dropping a shadow (projection) of one vector onto the other.
+
+- If the shadow goes in the same direction → +ve  
+- Opposite direction → -ve  
+- No shadow (perpendicular) → 0
