@@ -114,8 +114,6 @@ A **linear transformation** is a function that takes vectors as input and transf
 
 Think of it as changing the _rulers_ (basis vectors) you use to measure space, not the space itself.
 
----
-
 ### 🧠 Example:
 
 Let’s say you have a vector:
@@ -149,16 +147,16 @@ In short: Linear transformations **reshape the grid**, not the space. They give 
 
 In linear algebra, transformation matrices can rotate, scale, shear, or reflect vectors. When you apply transformations multiple times, you can **compose** them using matrix multiplication.
 
-## 2D Matrix
+### 2D Matrix
 
-### 🔁 One 90° Rotation
+#### 🔁 One 90° Rotation
 
 The transformation matrix for a **90° counterclockwise rotation** is:
 
 R = [ [ 0, -1 ], [ 1, 0 ] ]
 
 
-### 🔁🔁 Two 90° Rotations (180° Total)
+#### 🔁🔁 Two 90° Rotations (180° Total)
 
 To rotate a vector 90° **twice**, you multiply the rotation matrix by itself:
 
@@ -212,13 +210,13 @@ Since both matrices were the same, the order didn’t matter **in this special c
 
 ---
 
-# 📐 Determinants – Explained Simply
+## 📐 Determinants
 
 A determinant is a scalar value that can be computed from a square matrix. It gives insight into the transformation properties of a matrix—especially area/volume scaling, invertibility, and orientation (flipping).
 
 ---
 
-## 🔷 2D Determinant
+### 🔷 2D Determinant
 
 Given a 2×2 matrix:
 
@@ -229,13 +227,13 @@ The **determinant** is:
 det = ad - bc
 
 
-### What it means:
+#### What it means:
 - `det = 1`: Area unchanged
 - `det = 2`: Area doubled
 - `det = 0`: Collapsed into a line (not invertible)
 - `det < -2`: Flipped across an axis (mirrored) and scaled 2 times
 
-### Example:
+#### Example:
 
 Matrix:
 | 2 1 | | 1 1 |
@@ -246,7 +244,7 @@ det = 2×1 - 1×1 = 1
 
 ---
 
-## 🔷 3D Determinant
+### 🔷 3D Determinant
 
 In 3D, the determinant of a 3×3 matrix gives the volume scaling factor of a parallelepiped formed by three vectors.
 
@@ -257,15 +255,15 @@ A = | a1  a2  a3 |
 
 det(A) = a1(b2c3 - b3c2) - a2(b1c3 - b3c1) + a3(b1c2 - b2c1)
 
-### Example:
+#### Example:
 | 1 0 0 | | 0 2 0 | | 0 0 3 |
 det = 1 × 2 × 3 = 6
 
 ---
 
-### 🔄 Inverse Matrices, Column Space, and Null Space
+## 🔄 Inverse Matrices, Column Space, and Null Space
 
-#### 🧼 Inverse Matrix (The Undo Button)
+### 🧼 Inverse Matrix (The Undo Button)
 An **inverse matrix** undoes the effect of a transformation.
 
 🟢 Example:  
@@ -278,7 +276,7 @@ Where `I` is the **identity matrix** [ [1,0] [0,1] ] (does nothing — like mult
 
 ---
 
-#### 🔢 Rank (How Many Dimensions Survive?)
+### 🔢 Rank (How Many Dimensions Survive?)
 The **rank** of a matrix tells you how many **independent directions** survive after transformation.
 
 🟢 Example 1:
@@ -296,7 +294,7 @@ If a matrix just **rotates** the 2D space (like 90° rotation), both x and y dim
 
 ---
 
-#### 🧱 Column Space (All Possible Outputs)
+### 🧱 Column Space (All Possible Outputs)
 The **column space** of a matrix is the collection of all **possible outputs** you can get by multiplying the matrix with different input vectors.
 
 🟢 Example:
@@ -310,7 +308,7 @@ Think of column space as:
 
 ---
 
-#### 🕳️ Null Space (What Gets Crushed?)
+### 🕳️ Null Space (What Gets Crushed?)
 The **null space** is the set of all input vectors that get sent to the **zero vector** (i.e., disappear).
 
 🟢 Example:
@@ -375,14 +373,14 @@ This is like **projecting a 3D object onto a 2D plane** — similar to how a cam
 
 ---
 
-### 🔸 Dot Products
+## 🔸 Dot Products
 
 The **dot product** is a way to measure how much two vectors "agree" in direction.
 
 Think of it like asking:  
 👉 _"How much of one vector goes in the direction of the other?"_
 
-#### ✅ Simple Rule:
+### ✅ Simple Rule:
 If you have two vectors **A** and **B**, the dot product is:
 
 A · B = |A| × |B| × cos(θ)
@@ -391,7 +389,7 @@ Where:
 - `|A|` and `|B|` are lengths (magnitudes) of the vectors, which is calculated by `|A| = √(x² + y²)`
 - `θ` is the angle between them
 
-#### 📌 Interpretation:
+### 📌 Interpretation:
 - **Positive (+)** → Vectors point in **same direction**
 - **Zero (0)** → Vectors are **perpendicular**
 - **Negative (-)** → Vectors point in **opposite direction**
@@ -412,3 +410,37 @@ Imagine dropping a shadow (projection) of one vector onto the other.
 - If the shadow goes in the same direction → +ve  
 - Opposite direction → -ve  
 - No shadow (perpendicular) → 0
+
+---
+
+## ✖️ Cross Product
+
+The **cross product** of two 3D vectors is a vector that:
+
+- Is **perpendicular** to both the original vectors.
+- Has a **magnitude equal to the area** of the parallelogram formed by the two vectors.
+- Follows the **right-hand rule** for direction.
+
+### 📐 Formula
+
+If **a = [a₁, a₂, a₃]** and **b = [b₁, b₂, b₃]**, then:
+a × b = [ a₂b₃ - a₃b₂, a₃b₁ - a₁b₃, a₁b₂ - a₂b₁ ]
+
+#### ✅ Example
+
+Let’s say:
+
+a = [2, 3, 4] b = [5, 6, 7]
+Then:
+
+a × b = [ (3×7 - 4×6) = 21 - 24 = -3 (4×5 - 2×7) = 20 - 14 = 6 (2×6 - 3×5) = 12 - 15 = -3 ] = [-3, 6, -3]
+
+
+This result `[-3, 6, -3]` is a new vector that is **orthogonal (perpendicular)** to both `a` and `b`.
+
+### ✋ Right-Hand Rule
+
+To find the direction of the cross product:
+- Point your **index finger** in the direction of **vector a**.
+- Point your **middle finger** in the direction of **vector b**.
+- Your **thumb** will point in the direction of **a × b**.
