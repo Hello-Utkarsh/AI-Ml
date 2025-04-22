@@ -444,3 +444,60 @@ To find the direction of the cross product:
 - Point your **index finger** in the direction of **vector a**.
 - Point your **middle finger** in the direction of **vector b**.
 - Your **thumb** will point in the direction of **a × b**.
+
+---
+
+## 🧠 Solving for Original Vectors: Different Methods Explained
+
+Sometimes, you're given the **final vector after transformation** and the **transformation matrix**, and you want to find the **original vector**. Here are a few ways to do that:
+
+### 🔁 1. **Cramer's Rule**
+
+**Cramer's Rule** is a method used to solve a system of linear equations using **determinants**. It is based on the formula:
+
+x = det(A_x) / det(A) y = det(A_y) / det(A)
+
+- `A` is the transformation matrix.
+- `A_x` is the matrix formed by replacing the **x-column** of `A` with the result vector.
+- `A_y` is the same but for the **y-column**.
+
+#### ❌ Might fail if:
+- `det(A) = 0` → No unique solution.
+- System is too large (inefficient for high dimensions).
+
+---
+
+### 🔄 2. **Transpose and Inverse Method**
+
+This is the standard **linear algebra approach**:
+
+Original vector = A⁻¹ × Transformed vector
+
+Where:
+- `A⁻¹` is the **inverse** of the transformation matrix.
+
+You can find the inverse using various methods, including the transpose+determinant for 2×2 matrices:
+
+If A = [ [a, b], [c, d] ] Then A⁻¹ = (1/det) * [ [d, -b], [-c, a] ]
+
+
+#### ❌ Might fail if:
+- `A` is **not invertible** (`det(A) = 0`)
+- Not suitable for systems with many dependent rows.
+
+---
+
+### 📐 3. **Area-Based / Determinant Logic**
+
+In 2D, if you're dealing with geometric vectors, you can relate **areas** formed by the vector and basis axes. The determinant gives the **scaled area** after transformation.
+
+Area_after = |det(T)| × Area_before
+
+
+You can use this to back-calculate values if you know the transformed vector forms the same area.
+
+### ❌ Might fail if:
+- Vectors aren't in 2D or don't form a parallelogram.
+- Non-linear or partial transformations are applied.
+
+---
