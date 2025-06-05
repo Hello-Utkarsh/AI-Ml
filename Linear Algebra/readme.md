@@ -1,4 +1,6 @@
-# 📐 What is a Vector?
+# Linear Algebra
+
+## 📐 What is a Vector?
 
 Vectors are fundamental to understanding concepts in **physics**, **mathematics**, and **computer science** — and each field brings its own perspective:
 
@@ -21,11 +23,24 @@ Vectors are fundamental to understanding concepts in **physics**, **mathematics*
 
 The values in a vector tell us how far and in which direction we move from the origin:
 
-- In a 2D vector like `[3, 4]`,
-  - `3` → movement along the **x-axis**
-  - `4` → movement along the **y-axis**
-- In a 3D vector like `[3, 4, 5]`,
-  - `5` → movement along the **z-axis**
+- In a 2D vector like
+
+```
+|3|
+|4|
+```
+
+- `3` → movement along the **x-axis**
+- `4` → movement along the **y-axis**
+- In a 3D vector like
+
+```
+|3|
+|4|
+|5|
+```
+
+- `5` → movement along the **z-axis**
 
 It’s like a set of instructions:
 
@@ -81,7 +96,10 @@ These vectors **introduce new directions** or dimensions.
 
 Adding vectors is just like adding numbers **axis-wise**:
 
-[3, 4] + [5, -2] = [3 + 5, 4 + (-2)] = [8, 2]
+```
+| 3 |     | 5 |     | 3 + 5 |      | 8 |
+| 4 |  +  |-2 |  =  | 4 + (-2) | = | 2 |
+```
 
 ![Vector Example](./assets/Vector%20Addition1.png)
 
@@ -89,9 +107,26 @@ Adding vectors is just like adding numbers **axis-wise**:
 
 **Visual Interpretation**:
 
-- Go `3m` east and `4m` north → `[3, 4]`
-- Then go `5m` east and `2m` south → `[5, -2]`
-- Final position: `8m` east, `2m` north → `[8, 2]`
+- Go `3m` east and `4m` north →
+
+```
+| 3 |
+| 4 |
+```
+
+- Then go `5m` east and `2m` south →
+
+```
+| 5  |
+|-2  |
+```
+
+- Final position: `8m` east, `2m` north →
+
+```
+| 3 |     | 5 |     | 3 + 5 |     | 8 |
+| 4 |  +  |-2 |  =  | 4 + (-2) | = | 2 |
+```
 
 ### ✖️ **Vector Multiplication**
 
@@ -101,7 +136,10 @@ There are two main types:
 
 Multiply each element of the vector by a scalar (just a number):
 
-3 × [1, 2] = [3, 6]
+```
+3 × | 1 | = | 3 |
+    | 2 |   | 6 |
+```
 
 **In physics terms**:  
 Going `1m` east and `2m` north, 3 times in a row, lands you at `3m` east and `6m` north.
@@ -121,21 +159,53 @@ Think of it as changing the _rulers_ (basis vectors) you use to measure space, n
 
 Let’s say you have a vector:
 
-v = [2, 3]
+```
+v = | 2 |
+    | 3 |
+```
 
 In the **default grid**, this means:
 
-- Move **2 units along the x-axis** → using the standard basis `[1, 0]`
-- Move **3 units along the y-axis** → using the standard basis `[0, 1]`
+- Move **2 units along the x-axis** → using the standard basis
+
+```
+|1|
+|0|
+```
+
+- Move **3 units along the y-axis** → using the standard basis
+
+```
+|0|
+|1|
+```
 
 Now, apply a **linear transformation** that changes the basis vectors:
 
-- New x-axis basis vector → `i' = [1, -1]`
-- New y-axis basis vector → `j' = [1, 1]`
+- New x-axis basis vector →
+
+```
+i′ = | 1 |
+     |-1 |
+```
+
+- New y-axis basis vector →
+
+```
+j′ = | 1 |
+     | 1 |
+```
 
 So instead of building the vector using `[1, 0]` and `[0, 1]`, we now use the new basis:
 
-v' = 2 × [1, -1] + 3 × [1, 1] = [2, -2] + [3, 3] = [5, 1]
+```
+v′ = 2 × i′ + 3 × j′
+   = 2 × | 1 | + 3 × | 1 |
+         |-1 |       | 1 |
+
+   = | 2 | + | 3 | = | 5 |
+     |-2 |   | 3 |   | 1 |
+```
 
 This means the vector `[2, 3]` is **mapped to** `[5, 1]` under the new grid.
 
@@ -155,7 +225,10 @@ In linear algebra, transformation matrices can rotate, scale, shear, or reflect 
 
 The transformation matrix for a **90° counterclockwise rotation** is:
 
-R = [ [ 0, -1 ], [ 1, 0 ] ]
+```
+R = | 0   1 |
+    |-1   0 |
+```
 
 #### 🔁🔁 Two 90° Rotations (180° Total)
 
@@ -211,7 +284,11 @@ These will generally give **different results**, because the transformation is a
 ### ✅ Exception: Same Matrices
 
 In our previous example:
-R = [[ 0, -1 ], [ 1, 0 ] ]
+
+```
+R = | 0   1 |
+    |-1   0 |
+```
 
 We applied the same rotation matrix twice:
 R × R = R² = 180° rotation
@@ -230,7 +307,10 @@ A determinant is a scalar value that can be computed from a square matrix. It gi
 
 Given a 2×2 matrix:
 
-| a b | | c d |
+```
+| a b |
+| c d |
+```
 
 The **determinant** is:
 det = ad - bc
@@ -239,14 +319,18 @@ det = ad - bc
 
 - `det = 1`: Area unchanged
 - `det = 2`: Area doubled
-- `det = 0`: Collapsed into a line (not invertible)
+- `det = 0`: Collapsed into a line
 - `det < -2`: Flipped across an axis (mirrored) and scaled 2 times
 
 #### Example:
 
 Matrix:
+
+```
 | 2 1 |
 | 1 1 |
+```
+
 det = 2×1 - 1×1 = 1
 
 ✅ Area stays the same, but the shape gets sheared.
@@ -258,16 +342,24 @@ det = 2×1 - 1×1 = 1
 In 3D, the determinant of a 3×3 matrix gives the volume scaling factor of a parallelepiped formed by three vectors.
 
 Given a 3×3 matrix:
+
+```
 A = | a1 a2 a3 |
-| b1 b2 b3 |
-| c1 c2 c3 |
+    | b1 b2 b3 |
+    | c1 c2 c3 |
+```
 
 det(A) = a1(b2c3 - b3c2) - a2(b1c3 - b3c1) + a3(b1c2 - b2c1)
 
 #### Example:
 
-| 1 0 0 | | 0 2 0 | | 0 0 3 |
-det = 1 × 2 × 3 = 6
+```
+| 1 0 0 |
+| 0 2 0 |
+| 0 0 3 |
+```
+
+det = 1(6-0) - 0(0-0) + 0(0-0) = 6
 
 ---
 
@@ -283,7 +375,14 @@ If a transformation rotates a vector **90° clockwise**, the inverse matrix will
 📌 Mathematically:
 If `A` is a matrix and `A⁻¹` is its inverse, then:
 A × A⁻¹ = I
-Where `I` is the **identity matrix** [ [1,0] [0,1] ] (does nothing — like multiplying by 1).
+Where `I` is the **identity matrix**
+
+```
+| 1   0 |
+| 0   1 |
+```
+
+(does nothing — like multiplying by 1).
 
 ---
 
@@ -328,7 +427,14 @@ Think of column space as:
 The **null space** is the set of all input vectors that get sent to the **zero vector** (i.e., disappear).
 
 🟢 Example:
-If a matrix turns every vector on the y-axis into **[0, 0]**, then:
+If a matrix turns every vector on the y-axis into
+
+```
+|0|
+|0|
+```
+
+then:
 ✅ All those vectors are in the **null space**  
 They're lost after the transformation — like flattening paper into a line.
 
@@ -353,7 +459,12 @@ A `3 × 2` matrix has:
 It **transforms 2D vectors into 3D vectors**.
 
 **Example:**
-A = [ [2, 0], [-1, 1], [-2, 1] ]
+
+```
+A = |  2   0 |
+    | -1   1 |
+    | -2   1 |
+```
 
 This means the 2D basis vectors `[1, 0]` and `[0, 1]` get mapped into 3D:
 
@@ -361,7 +472,21 @@ This means the 2D basis vectors `[1, 0]` and `[0, 1]` get mapped into 3D:
 - y-axis → `[0, 1, 1]`
 
 So a 2D vector like `[3, 1]` becomes:
-A × [3, 1]ᵗ = 3×[2, -1, -2] + 1×[0, 1, 1] = [6, -3, -6] + [0, 1, 1] = [6, -2, -5]
+
+```
+A × v
+   = 3 × | 2 | + 1 × | 0 |
+         | -1 |   | 1 |
+         | -2 |   | 1 |
+
+   = | 6  | + | 0 |
+     | -3 |   | 1 |
+     | -6 |   | 1 |
+
+   = | 6  |
+     | -2 |
+     | -5 |
+```
 
 This is **useful for lifting lower-dimensional data into a higher-dimensional space**, such as in machine learning or graphics.
 
@@ -377,7 +502,11 @@ A `2 × 3` matrix has:
 It **transforms 3D vectors into 2D vectors**.
 
 **Example:**
-A = [ [1, 0, 2], [0, -1, 3] ]
+
+```
+A = | 1  0  2 |
+    | 0 -1  3 |
+```
 
 This means:
 
@@ -386,7 +515,18 @@ This means:
 - z-axis `[0, 0, 1]` → `[2, 3]`
 
 So a 3D vector like `[1, 2, 1]` becomes:
-A × [1, 2, 1]ᵗ = 1×[1, 0] + 2×[0, -1] + 1×[2, 3] = [1, 0] + [0, -2] + [2, 3] = [3, 1]
+
+```
+A × v =
+= 1 × | 1 | + 2 × | 0 | + 1 × | 2 |
+      | 0 |       | -1 |      | 3 |
+
+= | 1 | + | 0 | + | 2 |
+  | 0 |   | -2 |  | 3 |
+
+= | 3 |
+  | 1 |
+```
 
 This is like **projecting a 3D object onto a 2D plane** — similar to how a camera projects the 3D world onto your screen.
 
@@ -420,8 +560,12 @@ Where:
 
 Let’s say:
 
-A = [2, 4]  
-B = [3, 1]
+```
+A = |2|
+    |4|
+B = |3|
+    |1|
+```
 
 **Dot product =** `(2 × 3) + (4 × 1) = 6 + 4 = 10` → positive  
 ✅ So the angle between them is **less than 90°**
@@ -446,17 +590,51 @@ The **cross product** of two 3D vectors is a vector that:
 
 ### 📐 Formula
 
-If **a = [a₁, a₂, a₃]** and **b = [b₁, b₂, b₃]**, then:
-a × b = [ a₂b₃ - a₃b₂, a₃b₁ - a₁b₃, a₁b₂ - a₂b₁ ]
+If
+
+```
+a =  | a₁ |
+     | a₂ |
+     | a₃ |
+
+b =  | b₁ |
+     | b₂ |
+     | b₃ |
+```
+
+then:
+
+```
+a × b =  | a₂·b₃ − a₃·b₂ |
+         | a₃·b₁ − a₁·b₃ |
+         | a₁·b₂ − a₂·b₁ |
+```
 
 #### ✅ Example
 
 Let’s say:
 
-a = [2, 3, 4] b = [5, 6, 7]
-Then:
+```
+a =  | 2 |
+     | 3 |
+     | 4 |
 
-a × b = [ (3×7 - 4×6) = 21 - 24 = -3 (4×5 - 2×7) = 20 - 14 = 6 (2×6 - 3×5) = 12 - 15 = -3 ] = [-3, 6, -3]
+b =  | 5 |
+     | 6 |
+     | 7 |
+
+a × b = | (3×7 − 4×6) |
+        | (4×5 − 2×7) |
+        | (2×6 − 3×5) |
+
+      = | (21 − 24) |
+        | (20 − 14) |
+        | (12 − 15) |
+
+      = | -3 |
+        |  6 |
+        | -3 |
+```
 
 This result `[-3, 6, -3]` is a new vector that is **orthogonal (perpendicular)** to both `a` and `b`.
 
@@ -502,6 +680,7 @@ Where:
 - `A⁻¹` is the **inverse** of the transformation matrix.
 
 You can find the inverse using various methods, including the transpose+determinant for 2×2 matrices:
+
 ```
 A = | a   b |
     | c   d |
@@ -509,6 +688,7 @@ A = | a   b |
 A⁻¹ = (1 / det(A)) × |  d  -b |
                      | -c   a |
 ```
+
 #### ❌ Might fail if:
 
 - `A` is **not invertible** if `det(A) = 0`
@@ -547,12 +727,14 @@ When different people use **different coordinate systems (basis vectors)**, the 
 ```
 
 - **Person B** uses a **different basis**:
+
 ```
    î = | 2|
        |-1|
    ĵ = |1|
        |2|
 ```
+
 from B's perspective it is [1,0] and [0,1] as it is their basis vectors
 
 The same point in space will have **different coordinates** depending on the basis you're using.
@@ -605,4 +787,46 @@ v_b = (1/5) × | 2  -1 | × |3|
   = |0.8|
     |0.2|
 ```
+
+---
+
+## Eigenvectors and Eigenvalues
+
+- **Eigenvectors** are special vectors that, when a linear transformation is applied, **do not change direction** — they only get **stretched or squished**.
+- The amount they are stretched or squished is called the **Eigenvalue**.
+
+Mathematically:
+`(A - λI)v = 0` or equivalently:  
+`Av = λv`  
+Where:
+
+- `A` is a square matrix (transformation)
+- `v` is the eigenvector
+- `λ` (lambda) is the eigenvalue
+- `I` is the identity matrix
+
+---
+
+### Intuition
+
+- Most vectors change direction when transformed.
+- **Eigenvectors** don’t — they stay on the same line (span).
+- Only their **length changes**, scaled by the **eigenvalue**.
+
+---
+
+### Why Are They Useful?
+
+- They reveal the **underlying structure** of transformations.
+- In **PCA (Principal Component Analysis)**, the **eigenvectors of the covariance matrix** give the directions of maximum variance (new axes).
+- They help in **dimensionality reduction**, **stability analysis**, **quantum computing**, and more.
+
+---
+
+### Real Example Use Case
+
+Suppose we want to convert coordinates between two different grids (basis vectors).  
+Instead of working with arbitrary basis vectors, we can use the **eigenvectors** of the transformation matrix — because they simply scale.  
+This makes computations and interpretations much easier.
+
 ---
