@@ -159,6 +159,7 @@ When to use it:
 - If you really don’t want your model to ever be wildly off, this will force it to try harder on those tough cases.
 
 When to use it:
+
 - You care more about avoiding large blunders than small slips.
 - You’re okay if a few tiny errors happen, as long as you never see a huge surprise.
 
@@ -175,3 +176,76 @@ When to use it:
 | **MAE**   | Model stays closer to the bulk of data (outliers treated equally). |
 
 ---
+
+## Gradient Descent
+
+**Gradient descent** is an iterative method to find the weights and bias that minimize the loss (error) of a linear regression model.
+
+### 1. Initialization
+
+- Set weight \(w = 0\) and bias \(b = 0\).
+- Choose a **learning rate** \(\alpha\) (a small positive number, can be anything).
+- Decide on the number of iterations (or stop when convergence  is reached ie the loss is changing very little or is not changing at all).
+
+---
+
+### 2. Repeat Until Convergence
+
+For each iteration:
+
+#### a. Compute predictions
+
+\[
+\hat y_i = w \, x_i \;+\; b
+\]
+
+- \(x_i\): feature value of example \(i\)
+- \(\hat y_i\): predicted label for example \(i\)
+#### b. Calculate Mean Squared Error (MSE)  
+\[
+\frac{1}{M}\sum_{i=1}^M \bigl(\text{actual value} - \text{predicted value})^2
+\]  
+- \(M\): total number of training examples
+
+#### c. Compute gradients (“slopes” of the loss surface)
+**Weight derivative**  
+\[
+\frac{1}{M}\sum_{i=1}^M \bigl[\,2\,(\text{actual value} - \text{predicted value})\times x_i\bigr]
+\]  
+- \(x_i\): feature value for example \(i\)  
+- The factor 2 comes from differentiating the square \((\text{actual value} - \text{predicted value})^2\).
+
+**Bias derivative**  
+\[
+\frac{1}{M}\sum_{i=1}^M \bigl[\,2\,(\text{actual value} - \text{predicted value})\bigr]
+\]  
+- No \(x_i\) term because \(b\) shifts the prediction by a constant amount for every example.
+
+#### d. Update parameters
+
+- **New weight**:  
+  \[
+  w_{\text{new}}
+  = w_{\text{old}}
+  \;-\;\alpha\,\frac{\partial J}{\partial w}
+  \]
+- \(w_{old}\) is the old previous weight, usually 0 in the starting of the process
+- \(\alpha\) is a small positive number, can be anything
+- \(\frac{\partial J}{\partial w}\) is the weight derivative we discussed above
+- **New bias**:  
+  \[
+  b_{\text{new}}
+  = b_{\text{old}}
+  \;-\;\alpha\,\frac{\partial J}{\partial b}
+  \]
+- \(b_{old}\) is the old previous bias, usually 0 in the starting of the process
+- \(\alpha\) is a small positive number, can be anything
+- \(\frac{\partial J}{\partial b}\) is the bias derivative we discussed above
+## 3. Convergence
+
+- After each update, the loss \(J(w,b)\) should decrease.
+- Stop when:
+  - The change in loss between iterations is very small (converged), or  
+  - You reach a preset maximum number of iterations.
+
+> **Tip:** If you continue training past convergence, loss will fluctuate slightly around the minimum. To confirm convergence, train until loss stabilizes.
