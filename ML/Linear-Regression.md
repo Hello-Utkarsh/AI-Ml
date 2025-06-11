@@ -209,14 +209,14 @@ For each iteration:
 
 #### c. Compute gradients (“slopes” of the loss surface)
 **Weight derivative**  
-\[
+\[\frac{\partial J}{\partial w} = 
 \frac{1}{M}\sum_{i=1}^M \bigl[\,2\,(\text{actual value} - \text{predicted value})\times x_i\bigr]
 \]  
 - \(x_i\): feature value for example \(i\)  
 - The factor 2 comes from differentiating the square \((\text{actual value} - \text{predicted value})^2\).
 
 **Bias derivative**  
-\[
+\[\frac{\partial J}{\partial b} = 
 \frac{1}{M}\sum_{i=1}^M \bigl[\,2\,(\text{actual value} - \text{predicted value})\bigr]
 \]  
 - No \(x_i\) term because \(b\) shifts the prediction by a constant amount for every example.
@@ -241,7 +241,7 @@ For each iteration:
 - \(b_{old}\) is the old previous bias, usually 0 in the starting of the process
 - \(\alpha\) is a small positive number, can be anything
 - \(\frac{\partial J}{\partial b}\) is the bias derivative we discussed above
-## 3. Convergence
+### 3. Convergence
 
 - After each update, the loss \(J(w,b)\) should decrease.
 - Stop when:
@@ -249,3 +249,98 @@ For each iteration:
   - You reach a preset maximum number of iterations.
 
 > **Tip:** If you continue training past convergence, loss will fluctuate slightly around the minimum. To confirm convergence, train until loss stabilizes.
+
+## Hyperparameters
+
+**Parameters vs. Hyperparameters**  
+- **Parameters**: learned by the model during training (weights `w`, bias `b`).  
+- **Hyperparameters**: set **before** training to control the learning process.
+
+---
+
+### 1. Learning Rate (α)  
+- **What it is:** A positive scalar you choose before training.  
+- **Role in gradient descent:** In each update step, the model computes the gradients (slopes)  
+  \[
+    \frac{∂J}{∂w},\quad \frac{∂J}{∂b}
+  \]  
+  and then multiplies them by α to decide **how far** to move \(w\) and \(b\) downhill:  
+  \[
+    w_{\text{new}}
+      = w_{\text{old}}
+      - \alpha \;\frac{∂J}{∂w},
+    \quad
+    b_{\text{new}}
+      = b_{\text{old}}
+      - \alpha \;\frac{∂J}{∂b}.
+  \]
+- **Why it matters:**  
+  - **Too small** → tiny steps → very slow convergence.  
+  - **Too large** → bounces around the weights and bias that minimize the loss and may never convergence.  
+- **Example:** If the gradient is 2.5 and α = 0.01, each parameter changes by  
+  \(2.5 \times 0.01 = 0.025\) per step.
+---
+
+### 2. Batch Size  
+- **Batch size** is the number of training examples the model uses **before it updates weights and bias**.
+- Instead of processing the whole dataset at once, we divide it into smaller groups (batches) to make training faster and more efficient.
+
+#### Types of Batch Processing:
+
+| Type                            | Description                                                                 |
+|---------------------------------|-----------------------------------------------------------------------------|
+| **Full-batch Gradient Descent** | Model looks at **all examples** in the dataset before each update.         |
+| **Stochastic Gradient Descent (SGD)** | Model updates after **every single example**. Fast but can fluctuate a lot. |
+| **Mini-batch Gradient Descent** | Model updates after looking at a **small group** of examples (e.g., 32, 64). Best balance. |
+
+#### Why not use the full dataset every time?
+
+- If the dataset is **very large**, going through all examples before every update takes too long and uses too much memory.
+- Mini-batches are like breaking the dataset into smaller, manageable chunks so the model learns faster and more efficiently.
+
+> For example, if your dataset has 1000 examples:
+> - Full-batch: 1 update after looking at all 1000.
+> - SGD: 1000 updates (1 per example).
+> - Mini-batch (batch size = 100): 10 updates (1 per batch of 100).
+
+---
+
+### 3. Epochs  
+- Number of times the model processes the **entire** training set.  
+- More epochs → more passes → usually better fit (but longer training).
+
+#### Update Frequency Examples  
+
+| Method                          | Update Frequency                         | Total Updates (1000 examples, 20 epochs) |
+|---------------------------------|------------------------------------------|-------------------------------------------|
+| **Full-batch GD**               | After all 1000 examples (per epoch)  | 20                                        |
+| **Stochastic GD (SGD)**         | After each example                  | 1000 × 20 = 20 000                         |
+| **Mini-batch GD** (batch=100)   | After every 100 examples            | (1000 / 100) × 20 = 200                    |
+
+---
+
+### 5. Putting It All Together  
+
+1. **Initialize** `w=0`, `b=0`.  
+2. **Repeat** for each epoch:  
+   - Shuffle data (optional).  
+   - Split into batches (according to batch size).  
+   - For each batch:  
+     1. Compute predictions \(\hat y = w x + b\).  
+     2. Compute error \(\hat y - y\).  
+     3. Compute gradients  
+        \[
+          \frac{∂J}{∂w}=\frac{2}{m}\sum(\hat y - y)x,\quad
+          \frac{∂J}{∂b}=\frac{2}{m}\sum(\hat y - y)
+        \]  
+        where \(m\) = batch size.  
+     4. Update  
+        \[
+          w \;←\; w - α\,\frac{∂J}{∂w},\quad
+          b \;←\; b - α\,\frac{∂J}{∂b}.
+        \]
+3. **Stop** when loss stabilizes or max epochs reached.
+
+---
+
+*Keep it simple: pick a moderate batch size (32–128), a learning rate that makes loss drop smoothly, and enough epochs to converge.*  
