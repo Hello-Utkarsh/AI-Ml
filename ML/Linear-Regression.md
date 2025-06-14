@@ -22,58 +22,40 @@ y = wx + b
 - **w** is the slope of the line. In ML, this is a parameter learned during training.
 - **b** is the y-intercept of the line. In ML, this is also a parameter learned during training.
 
-To fit a straight line through two points \((x₁, y₁)\) and \((x₂, y₂)\), we calculate:
+To fit a straight line through two points $(x₁, y₁)$ and $(x₂, y₂)$, we calculate:
 
 1. **Slope (m)**  
-    \[
-   m = \frac{y₂ - y₁}{x₂ - x₁}
-   \]
+    $m = \frac {y₂ - y₁}{x₂ - x₁}$
 
    - Choose any two points from the data.
    - Subtract the y-values (outputs) and divide by the difference in x-values (inputs).
      > **Note:** This is a simplified method for estimating slope using just two data points. In actual linear regression, especially with multiple data points, the slope is computed using optimization techniques (like minimizing mean squared error) over the entire dataset.
 
 2. **Bias (b)**  
-   Once the slope \(m\) is known, pick one of the two points \((x_i, y_i)\) and solve for \(b\) in:
-   \[
-   y_i = m·x_i + b
-   \quad\Longrightarrow\quad
-   b = y_i - m·x_i
-   \]
+   Once the slope $m$ is known, pick one of the two points $(x_i, y_i)$ and solve for $b$ in:
+   $y_i = m·x_i + b\quad\Longrightarrow\quad b = y_i - m·x_i$
    - The bias is just the intercept where the line crosses the y-axis.
 
 **Example (from our dataset):**
 
-- Pick two points, e.g., \((3.50, 18)\) and \((4.34, 15)\).
+- Pick two points, e.g., $(3.50, 18)$ and $(4.34, 15)$.
   1. Calculate slope:
-     \[
-     m = \frac{15 - 18}{4.34 - 3.50}
-     = \frac{-3}{0.84}
-     \approx -3.57
-     \]
-  2. Calculate bias using \((3.50, 18)\):
-     \[
-     b = 18 - (-3.57)·3.50
-     = 18 + 12.495
-     \approx 30.495
-     \]
+     $m = \frac{15 - 18}{4.34 - 3.50}= \frac{-3}{0.84}\approx -3.57$
+  2. Calculate bias using $(3.50, 18)$:
+     $b = 18 - (-3.57)·3.50= 18 + 12.495\approx 30.495$
   3. The resulting line is:
      ```
      y = 30.495 + (-3.57)x
      ```
-  4. To predict MPG for a 4,000-pound car (\(x = 4.00\)):
-     \[
-     y = 30.495 + (-3.57)·4.00
-     = 30.495 - 14.28
-     = 16.215
-     \]
+  4. To predict MPG for a 4,000-pound car ($x = 4.00$):
+     $ y = 30.495 + (-3.57)·4.00= 30.495 - 14.28= 16.215$
      So, approximately 16.2 MPG.
 
 > **Note:** In practice, when fitting a model on many data points, weight and bias are found by minimizing a cost function (e.g., mean squared error) across all points, not just two. The above illustrates how slope and bias relate to any two points on a straight line.
 
 ---
 
-## 5. Extending to Multiple Features
+#### Extending to Multiple Features
 
 A model that relies on multiple features can be written as:
 
@@ -109,12 +91,12 @@ Loss is a numerical metric that quantifies how wrong a model’s predictions are
 
 ## 1. Four Main Loss Types
 
-| Loss type                     | Definition                                                  | Equation                                                                                   |
-| ----------------------------- | ----------------------------------------------------------- | ------------------------------------------------------------------------------------------ |
-| **L1 loss**                   | Sum of absolute differences between predictions and actuals | \(\displaystyle\sum{} \bigl(\,\text{actual value} - \text{predicted value})^2\)            |
-| **Mean Absolute Error (MAE)** | Average of L1 loss over _N_ examples                        | \(\frac{1}{N}\displaystyle\sum{} \bigl(\text{actual value} - \text{predicted value})^2\)   |
-| **L2 loss**                   | Sum of squared differences between predictions and actuals  | \( \displaystyle\sum{}\bigl(\text{actual value} - \text{predicted value})^2\)              |
-| **Mean Squared Error (MSE)**  | Average of L2 loss over _N_ examples                        | \(\frac{1}{N}\displaystyle\sum{} \bigl(\,\text{actual value} - \text{predicted value})^2\) |
+| Loss type                     | Definition                                                  | Equation                                                                                 |
+| ----------------------------- | ----------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| **L1 loss**                   | Sum of absolute differences between predictions and actuals | $\displaystyle\sum{} \bigl(\,\text{actual value} - \text{predicted value})^2$            |
+| **Mean Absolute Error (MAE)** | Average of L1 loss over _N_ examples                        | $\frac{1}{N}\displaystyle\sum{} \bigl(\text{actual value} - \text{predicted value})^2$   |
+| **L2 loss**                   | Sum of squared differences between predictions and actuals  | $\displaystyle\sum{}\bigl(\text{actual value} - \text{predicted value})^2$              |
+| **Mean Squared Error (MSE)**  | Average of L2 loss over _N_ examples                        | $\frac{1}{N}\displaystyle\sum{} \bigl(\,\text{actual value} - \text{predicted value})^2$ |
 
 > **Note:** Squaring (in L2/MSE) penalizes large errors more heavily, while absolute value (in L1/MAE) treats all errors linearly.
 
@@ -183,9 +165,9 @@ When to use it:
 
 ### 1. Initialization
 
-- Set weight \(w = 0\) and bias \(b = 0\).
-- Choose a **learning rate** \(\alpha\) (a small positive number, can be anything).
-- Decide on the number of iterations (or stop when convergence  is reached ie the loss is changing very little or is not changing at all).
+- Set weight $w = 0$ and bias $b = 0$.
+- Choose a **learning rate** $\alpha$ (a small positive number, can be anything).
+- Decide on the number of iterations (or stop when convergence is reached ie the loss is changing very little or is not changing at all).
 
 ---
 
@@ -195,103 +177,88 @@ For each iteration:
 
 #### a. Compute predictions
 
-\[
-\hat y_i = w \, x_i \;+\; b
-\]
+$\hat y_i = w \, x_i \;+\; b$
 
-- \(x_i\): feature value of example \(i\)
-- \(\hat y_i\): predicted label for example \(i\)
-#### b. Calculate Mean Squared Error (MSE)  
-\[
-\frac{1}{M}\sum_{i=1}^M \bigl(\text{actual value} - \text{predicted value})^2
-\]  
-- \(M\): total number of training examples
+- $x_i$: feature value of example $i$
+- $\hat y_i$: predicted label for example $i$
+
+#### b. Calculate Mean Squared Error (MSE)
+
+$\frac{1}{M}\sum_{i=1}^M \bigl(\text{actual value} - \text{predicted value})^2$
+
+- $M$: total number of training examples
 
 #### c. Compute gradients (“slopes” of the loss surface)
+
 **Weight derivative**  
-\[\frac{\partial J}{\partial w} = 
-\frac{1}{M}\sum_{i=1}^M \bigl[\,2\,(\text{actual value} - \text{predicted value})\times x_i\bigr]
-\]  
-- \(x_i\): feature value for example \(i\)  
-- The factor 2 comes from differentiating the square \((\text{actual value} - \text{predicted value})^2\).
+$\frac{\partial J}{\partial w} = \frac{1}{M}\sum\_{i=1}^M \bigl[\,2\,(\text{actual value} - \text{predicted value})\times x_i\bigr]$
+
+- $x_i$: feature value for example $i$
+- The factor 2 comes from differentiating the square $(\text{actual value} - \text{predicted value})^2$.
 
 **Bias derivative**  
-\[\frac{\partial J}{\partial b} = 
-\frac{1}{M}\sum_{i=1}^M \bigl[\,2\,(\text{actual value} - \text{predicted value})\bigr]
-\]  
-- No \(x_i\) term because \(b\) shifts the prediction by a constant amount for every example.
+$\frac{\partial J}{\partial b} = \frac{1}{M}\sum\_{i=1}^M \bigl[\,2\,(\text{actual value} - \text{predicted value})\bigr]$
+
+- No $x_i$ term because $b$ shifts the prediction by a constant amount for every example.
 
 #### d. Update parameters
 
 - **New weight**:  
-  \[
-  w_{\text{new}}
-  = w_{\text{old}}
-  \;-\;\alpha\,\frac{\partial J}{\partial w}
-  \]
-- \(w_{old}\) is the old previous weight, usually 0 in the starting of the process
-- \(\alpha\) is a small positive number, can be anything
-- \(\frac{\partial J}{\partial w}\) is the weight derivative we discussed above
+  $w*{\text{new}}= w*{\text{old}}\;-\;\alpha\,\frac{\partial J}{\partial w}$
+- $w_{old}$ is the old previous weight, usually 0 in the starting of the process
+- $\alpha$ is a small positive number, can be anything
+- $\frac{\partial J}{\partial w}$ is the weight derivative we discussed above
 - **New bias**:  
-  \[
-  b_{\text{new}}
-  = b_{\text{old}}
-  \;-\;\alpha\,\frac{\partial J}{\partial b}
-  \]
-- \(b_{old}\) is the old previous bias, usually 0 in the starting of the process
-- \(\alpha\) is a small positive number, can be anything
-- \(\frac{\partial J}{\partial b}\) is the bias derivative we discussed above
+  $b_{\text{new}}= b_{\text{old}}\;-\;\alpha\,\frac{\partial J}{\partial b}$
+- $b_{old}$ is the old previous bias, usually 0 in the starting of the process
+- $\alpha$ is a small positive number, can be anything
+- $\frac{\partial J}{\partial b}$ is the bias derivative we discussed above
+
 ### 3. Convergence
 
-- After each update, the loss \(J(w,b)\) should decrease.
+- After each update, the loss $J(w,b)$ should decrease.
 - Stop when:
-  - The change in loss between iterations is very small (converged), or  
+  - The change in loss between iterations is very small (converged), or
   - You reach a preset maximum number of iterations.
 
 > **Tip:** If you continue training past convergence, loss will fluctuate slightly around the minimum. To confirm convergence, train until loss stabilizes.
 
 ## Hyperparameters
 
-**Parameters vs. Hyperparameters**  
-- **Parameters**: learned by the model during training (weights `w`, bias `b`).  
+**Parameters vs. Hyperparameters**
+
+- **Parameters**: learned by the model during training (weights `w`, bias `b`).
 - **Hyperparameters**: set **before** training to control the learning process.
 
 ---
 
-### 1. Learning Rate (α)  
-- **What it is:** A positive scalar you choose before training.  
+### 1. Learning Rate (α)
+
+- **What it is:** A positive scalar you choose before training.
 - **Role in gradient descent:** In each update step, the model computes the gradients (slopes)  
-  \[
-    \frac{∂J}{∂w},\quad \frac{∂J}{∂b}
-  \]  
-  and then multiplies them by α to decide **how far** to move \(w\) and \(b\) downhill:  
-  \[
-    w_{\text{new}}
-      = w_{\text{old}}
-      - \alpha \;\frac{∂J}{∂w},
-    \quad
-    b_{\text{new}}
-      = b_{\text{old}}
-      - \alpha \;\frac{∂J}{∂b}.
-  \]
-- **Why it matters:**  
-  - **Too small** → tiny steps → very slow convergence.  
-  - **Too large** → bounces around the weights and bias that minimize the loss and may never convergence.  
+  $\frac{∂J}{∂w},\quad \frac{∂J}{∂b}$  
+  and then multiplies them by α to decide **how far** to move $w$ and $b$ downhill:  
+  $w_{\text{new}}= w_{\text{old}}- \alpha \;\frac{∂J}{∂w},\quad b_{\text{new}}= b_{\text{old}}- \alpha \;\frac{∂J}{∂b}.$
+- **Why it matters:**
+  - **Too small** → tiny steps → very slow convergence.
+  - **Too large** → bounces around the weights and bias that minimize the loss and may never convergence.
 - **Example:** If the gradient is 2.5 and α = 0.01, each parameter changes by  
-  \(2.5 \times 0.01 = 0.025\) per step.
+  $2.5 \times 0.01 = 0.025$ per step.
+
 ---
 
-### 2. Batch Size  
+### 2. Batch Size
+
 - **Batch size** is the number of training examples the model uses **before it updates weights and bias**.
 - Instead of processing the whole dataset at once, we divide it into smaller groups (batches) to make training faster and more efficient.
 
 #### Types of Batch Processing:
 
-| Type                            | Description                                                                 |
-|---------------------------------|-----------------------------------------------------------------------------|
-| **Full-batch Gradient Descent** | Model looks at **all examples** in the dataset before each update.         |
-| **Stochastic Gradient Descent (SGD)** | Model updates after **every single example**. Fast but can fluctuate a lot. |
-| **Mini-batch Gradient Descent** | Model updates after looking at a **small group** of examples (e.g., 32, 64). Best balance. |
+| Type                                  | Description                                                                                |
+| ------------------------------------- | ------------------------------------------------------------------------------------------ |
+| **Full-batch Gradient Descent**       | Model looks at **all examples** in the dataset before each update.                         |
+| **Stochastic Gradient Descent (SGD)** | Model updates after **every single example**. Fast but can fluctuate a lot.                |
+| **Mini-batch Gradient Descent**       | Model updates after looking at a **small group** of examples (e.g., 32, 64). Best balance. |
 
 #### Why not use the full dataset every time?
 
@@ -299,48 +266,44 @@ For each iteration:
 - Mini-batches are like breaking the dataset into smaller, manageable chunks so the model learns faster and more efficiently.
 
 > For example, if your dataset has 1000 examples:
+>
 > - Full-batch: 1 update after looking at all 1000.
 > - SGD: 1000 updates (1 per example).
 > - Mini-batch (batch size = 100): 10 updates (1 per batch of 100).
 
 ---
 
-### 3. Epochs  
-- Number of times the model processes the **entire** training set.  
+### 3. Epochs
+
+- Number of times the model processes the **entire** training set.
 - More epochs → more passes → usually better fit (but longer training).
 
-#### Update Frequency Examples  
+#### Update Frequency Examples
 
-| Method                          | Update Frequency                         | Total Updates (1000 examples, 20 epochs) |
-|---------------------------------|------------------------------------------|-------------------------------------------|
-| **Full-batch GD**               | After all 1000 examples (per epoch)  | 20                                        |
-| **Stochastic GD (SGD)**         | After each example                  | 1000 × 20 = 20 000                         |
-| **Mini-batch GD** (batch=100)   | After every 100 examples            | (1000 / 100) × 20 = 200                    |
+| Method                        | Update Frequency                    | Total Updates (1000 examples, 20 epochs) |
+| ----------------------------- | ----------------------------------- | ---------------------------------------- |
+| **Full-batch GD**             | After all 1000 examples (per epoch) | 20                                       |
+| **Stochastic GD (SGD)**       | After each example                  | 1000 × 20 = 20 000                       |
+| **Mini-batch GD** (batch=100) | After every 100 examples            | (1000 / 100) × 20 = 200                  |
 
 ---
 
-### 5. Putting It All Together  
+#### Putting It All Together
 
-1. **Initialize** `w=0`, `b=0`.  
-2. **Repeat** for each epoch:  
-   - Shuffle data (optional).  
-   - Split into batches (according to batch size).  
-   - For each batch:  
-     1. Compute predictions \(\hat y = w x + b\).  
-     2. Compute error \(\hat y - y\).  
+1. **Initialize** `w=0`, `b=0`.
+2. **Repeat** for each epoch:
+   - Shuffle data (optional).
+   - Split into batches (according to batch size).
+   - For each batch:
+     1. Compute predictions $\hat y = w x + b$.
+     2. Compute error $\hat y - y$.
      3. Compute gradients  
-        \[
-          \frac{∂J}{∂w}=\frac{2}{m}\sum(\hat y - y)x,\quad
-          \frac{∂J}{∂b}=\frac{2}{m}\sum(\hat y - y)
-        \]  
-        where \(m\) = batch size.  
+        $\frac{∂J}{∂w}=\frac{2}{m}\sum(\hat y - y)x,\quad\frac{∂J}{∂b}=\frac{2}{m}\sum(\hat y - y)$  
+        where $m$ = batch size.
      4. Update  
-        \[
-          w \;←\; w - α\,\frac{∂J}{∂w},\quad
-          b \;←\; b - α\,\frac{∂J}{∂b}.
-        \]
+        $w \;←\; w - α\,\frac{∂J}{∂w},\quad b \;←\; b - α\,\frac{∂J}{∂b}.$
 3. **Stop** when loss stabilizes or max epochs reached.
 
 ---
 
-*Keep it simple: pick a moderate batch size (32–128), a learning rate that makes loss drop smoothly, and enough epochs to converge.*  
+_Keep it simple: pick a moderate batch size (32–128), a learning rate that makes loss drop smoothly, and enough epochs to converge._
