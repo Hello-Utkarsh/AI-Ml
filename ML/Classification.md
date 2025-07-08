@@ -221,8 +221,6 @@ It gives a single score that balances **both**:
 - **Precision**: How many predicted spam emails were actually spam  
 - **Recall**: How many actual spam emails the model successfully caught
 
----
-
 ### 📨 Spam Example:
 
 - Precision = 0.80 (80% of flagged emails were truly spam)  
@@ -234,8 +232,6 @@ $$\text{F1} = 2 \cdot \frac{0.80 \cdot 0.60}{0.80 + 0.60} = 2 \cdot \frac{0.48}{
 
 So, F1 Score ≈ 68.6%
 
----
-
 ### 📌 Key Insights:
 
 - **F1 = 1.0** only when **both precision and recall are perfect**
@@ -244,10 +240,85 @@ So, F1 Score ≈ 68.6%
 - If **precision and recall are very different**, F1 drops closer to the worse one  
   (e.g., precision = 0.9, recall = 0.1 → F1 ≈ 0.18)
 
----
-
 ### ✅ Why Use F1?
 
 - Accuracy is misleading in imbalanced datasets (e.g., 1% spam)  
 - F1 gives a **balanced view** of the model’s ability to catch spam **without too many false alarms**
 - Great for real-world tasks where **you care about both catching positives and avoiding mistakes**
+
+---
+
+## 📈 ROC and AUC
+
+In binary classification (like spam detection), models give probability scores. But choosing **one threshold** can hide the model’s full behavior.  
+**ROC Curve** and **AUC** help us evaluate the model across **all possible thresholds**.
+
+**ROC (Receiver Operating Characteristic) Curve** plots:
+
+- **True Positive Rate (TPR)** = Recall  
+  > Out of all actual spam emails, how many were correctly predicted as spam  
+- **False Positive Rate (FPR)**  
+  > Out of all actual legitimate emails, how many were wrongly predicted as spam
+
+The ROC curve shows **how TPR and FPR change** as we **adjust the threshold** from high to low.
+
+---
+
+### 📬 Example: Spam Classification
+
+Let’s say we have:
+- **10 actual spam emails**
+- **10 actual not-spam emails**
+- Each email has a **predicted spam score** (between 0 and 1)
+
+Here are the scores:
+
+### Spam Email Scores (actual positives):
+[0.95, 0.90, 0.85, 0.80, 0.70, 0.60, 0.55, 0.40, 0.30, 0.10]
+
+### Not-Spam Email Scores (actual negatives):
+[0.65, 0.50, 0.45, 0.35, 0.25, 0.20, 0.15, 0.12, 0.08, 0.02]
+
+
+We’ll test 5 thresholds and calculate the TPR and FPR at each:
+
+| **Threshold** | TP | FN | FP | TN | **TPR** | **FPR** |
+|---------------|----|----|----|----|---------|---------|
+| 0.90          | 2  | 8  | 0  | 10 | 0.20    | 0.00    |
+| 0.70          | 5  | 5  | 1  | 9  | 0.50    | 0.10    |
+| 0.50          | 6  | 4  | 2  | 8  | 0.60    | 0.20    |
+| 0.30          | 8  | 2  | 4  | 6  | 0.80    | 0.40    |
+| 0.10          | 9  | 1  | 7  | 3  | 0.90    | 0.70    |
+
+### 🧭 Interpreting the ROC Curve
+
+- **X-axis:** False Positive Rate  
+- **Y-axis:** True Positive Rate  
+- Each point = a threshold  
+- Connecting all points gives the **ROC curve**
+
+### ✅ A good model:
+- Rises quickly to top-left (high TPR, low FPR)
+- The **closer to (0,1)** the curve goes, the better
+
+---
+
+## 🧮 What is AUC?
+
+**AUC (Area Under Curve)** = Total area under the ROC curve  
+It gives a **single value** summarizing the model’s ability to distinguish between the classes:
+
+| AUC Value | Meaning                                 |
+|-----------|-----------------------------------------|
+| **1.0**   | Perfect classifier                      |
+| **0.9**   | Excellent model                         |
+| **0.5**   | No better than random guessing          |
+| **< 0.5** | Worse than random (model is flipped)    |
+
+### 📌 Intuition:
+
+If you pick 1 random spam and 1 random not-spam email,  
+**AUC = probability** that the spam email will get a **higher score** than the not-spam email.
+
+![ROC Graph](./assets/roc_curve.png)
+![AUC](./assets/roc_auc.png)
