@@ -141,27 +141,30 @@ P(A \mid B) = \frac{P(B \mid A) \cdot P(A)}{P(B)}
 $$
 
 Where:
-- **P(A | B)** = Probability of event A happening given B happened  
-- **P(B | A)** = Probability of event B happening given A happened  
-- **P(A)** = Probability of A  
+
+- **P(A | B)** = Probability of event A happening given B happened
+- **P(B | A)** = Probability of event B happening given A happened
+- **P(A)** = Probability of A
 - **P(B)** = Total probability of B happening (both with A and without A)
 
 ### Bayes’ Theorem – Email Spam Example
 
 **Problem Setup**:
-- Total emails: 100  
-- Spam emails: 20  
-- Non-spam emails: 80  
-- Spam emails with word “lottery”: 14  
+
+- Total emails: 100
+- Spam emails: 20
+- Non-spam emails: 80
+- Spam emails with word “lottery”: 14
 - Non-spam emails with “lottery”: 10
 
-We want to calculate:  
+We want to calculate:
+
 ##### Example 1: What’s the probability an email is **spam**, given it contains the word **lottery**?
 
-- **P(Spam)** = 20/100 = 0.2  
-- **P(Lottery | Spam)** = 14/20 = 0.7  
-- **P(Lottery | Not Spam)** = 10/80 = 0.125  
-- **P(Lottery)** = (14 + 10)/100 = 0.24  
+- **P(Spam)** = 20/100 = 0.2
+- **P(Lottery | Spam)** = 14/20 = 0.7
+- **P(Lottery | Not Spam)** = 10/80 = 0.125
+- **P(Lottery)** = (14 + 10)/100 = 0.24
 
 $$
 P(Spam \mid Lottery) = \frac{P(Lottery \mid Spam) \cdot P(Spam)}{P(Lottery)}
@@ -198,9 +201,11 @@ Using Bayes' Theorem:
 P(Free ∩ Offer) = P(Spam) × P(Free ∩ Offer | Spam) + P(Ham) × P(Free ∩ Offer | Ham)
 
 P(Free ∩ Offer) = 0.3 × 0.3 + 0.7 × 0.0143 = 0.09 + 0.01 = 0.1
+
 $$
 \text{P(Spam | Free ∩ Offer)} = \frac{\text{P(Free ∩ Offer | Spam) × P(Spam)}}{\text{P(Free ∩ Offer)}}
 $$
+
 $$
  = \frac{0.3*0.3}{0.1}
 $$
@@ -235,3 +240,90 @@ $$
 $$
 
 As we can we see how the naive bayes makes our work easier while still being close to the normal bayes
+
+## Random Variable
+
+A **Random Variable** is a variable that takes on **numerical values** based on the **outcome of a random experiment**.
+
+There are **two main types**:
+
+### 1. **Discrete Random Variable**
+
+- Takes **countable** values (like 0, 1, 2, 3, …).
+- Examples:
+  - Number of heads in 3 coin tosses
+  - Number of students in a class
+- Represented using a **Probability Mass Function (PMF)**.
+
+### 2. **Continuous Random Variable**
+
+- Takes **uncountably infinite** values (within an interval).
+- Examples:
+  - Height of students. It can 150cm, 150.1cm, 150.01cm, 150.001cm and so on, we can't count all the values between the interval
+  - Time taken to complete a task
+- Represented using a **Probability Density Function (PDF)**.
+
+## Probability Distribution
+
+A **Probability Distribution** describes **how the probabilities are distributed** over the **values of a random variable**.
+
+It tells us:
+
+- What are all the possible outcomes?
+- What is the probability of each outcome?
+
+### For Discrete Random Variables:
+
+- The distribution is a list/table/function of **each possible value** and its corresponding **probability**.
+- Sum of all probabilities must be **1**.
+- Represented using a **Probability Mass Function (PMF)**.
+
+#### Example (Tossing 3 coins):
+
+Let X = number of heads
+We know that when we toss 3 coins there can be total 4 outcomes, we get 0 Heads, 1 Heads, 2 Heads or 3 Heads
+
+| X   | P(X)                |
+| --- | ------------------- |
+| 0   | 1/8 (TTT)           |
+| 1   | 3/8 (HTT, THT, TTH) |
+| 2   | 3/8 (HHT, HTH, THH) |
+| 3   | 1/8 (HHH)           |
+
+---
+
+## Binomial Distribution
+
+A **Binomial Distribution** models the probability of getting **a fixed number of successes** in a fixed number of **independent** trials, where each trial has **two outcomes**: success or failure.
+
+Conditions for Binomial Distribution:
+
+1. **Fixed number of trials (n)**
+2. **Only two outcomes** in each trial — success or failure
+3. **Constant probability of success (p)** in each trial
+4. **Independent trials**
+
+$$
+P(X = k) =
+\binom{n}{k} \cdot p^k \cdot (1 - p)^{n - k}
+$$
+
+Where,
+
+- **n** = total number of trials
+- **k** = number of successes
+- **p** = probability of success in one trial
+- **1 - p** = probability of failure
+  $$
+  \binom{n}{k} = \text{"n choose k" = number of ways to choose k successes from n trials}
+  $$
+
+### Example:
+
+Toss a biased coin **10 times** (n = 10), where the chance of getting heads (success) is 0.6 (p = 0.6).  
+What is the probability of getting exactly **4 heads**?
+
+$$
+P(X = 4) =
+\binom{10}{4} \cdot 0.6^4 \cdot (0.4)^6
+$$
