@@ -191,20 +191,20 @@ $\frac{1}{M}\sum_{i=1}^M \bigl(\text{actual value} - \text{predicted value})^2$
 #### c. Compute gradients (“slopes” of the loss surface)
 
 **Weight derivative**  
-$\frac{\partial J}{\partial w} = \frac{1}{M}\sum_{i=1}^M \bigl[\,2\,(\text{actual value} - \text{predicted value})\times x_i\bigr]$
+$\frac{\partial J}{\partial w} = \frac{1}{M}\sum_{i=1}^M \bigl[\,2\,(\text{predicted value} - \text{actual value})]$
 
 - $x_i$: feature value for example $i$
-- The factor 2 comes from differentiating the square $(\text{actual value} - \text{predicted value})^2$.
+- The factor 2 comes from differentiating the square $(\text{predicted value} - \text{actual value})^2$.
 
 **Bias derivative**  
-$\frac{\partial J}{\partial b} = \frac{1}{M}\sum{i=1}^M \bigl[\,2\,(\text{actual value} - \text{predicted value})\bigr]$
+$\frac{\partial J}{\partial b} = \frac{1}{M}\sum_{i=1}^M \bigl[\,2\,(\text{predicted value} - \text{actual value})\bigr]$
 
 - No $x_i$ term because $b$ shifts the prediction by a constant amount for every example.
 
 #### d. Update parameters
 
 - **New weight**:  
-  $w*{\text{new}}= w*{\text{old}}\;-\;\alpha\,\frac{\partial J}{\partial w}$
+  $w_{\text{new}}= w_{\text{old}}\;-\;\alpha\,\frac{\partial J}{\partial w}$
 - $w_{old}$ is the old previous weight, usually 0 in the starting of the process
 - $\alpha$ is a small positive number, can be anything
 - $\frac{\partial J}{\partial w}$ is the weight derivative we discussed above
@@ -222,6 +222,77 @@ $\frac{\partial J}{\partial b} = \frac{1}{M}\sum{i=1}^M \bigl[\,2\,(\text{actual
   - You reach a preset maximum number of iterations.
 
 > **Tip:** If you continue training past convergence, loss will fluctuate slightly around the minimum. To confirm convergence, train until loss stabilizes.
+
+### Implementation
+
+```python
+# Initialize parameters
+weight = 0  # slope
+bias = 0    # intercept
+learning_rate = 0.05  # step size for gradient descent
+
+# Training data
+data = [
+    {"x": 3.50, "y": 18},
+    {"x": 3.69, "y": 15},
+    {"x": 3.44, "y": 18},
+    {"x": 3.43, "y": 16},
+    {"x": 4.34, "y": 15},
+    {"x": 4.42, "y": 14},
+    {"x": 2.37, "y": 24}
+]
+
+mse_old = float("inf")  # start with infinity so first comparison always passes
+
+while True:
+    predictions = []
+    total_error = 0
+    weight_sum = 0
+    bias_sum = 0
+
+    # Step 1: Calculate predictions and accumulate gradients
+    for i in data:
+        pred = weight * i['x'] + bias  # predicted value
+        predictions.append(pred)
+
+        error = pred - i['y']  # predicted - actual
+
+        total_error += error ** 2  # squared error for MSE
+        weight_sum += 2 * error * i['x']  # gradient wrt weight
+        bias_sum += 2 * error             # gradient wrt bias
+
+    # Step 2: Compute Mean Squared Error
+    mse_new = total_error / len(data)
+
+    # Step 3: Check for convergence
+    if mse_old - mse_new > 0.1:  # significant improvement
+        mse_old = mse_new
+        weight_der = weight_sum / len(data)
+        bias_der = bias_sum / len(data)
+
+        # Step 4: Update parameters
+        weight -= learning_rate * weight_der
+        bias -= learning_rate * bias_der
+
+    else:
+        break  # stop training
+
+# Test dataset
+test_data = [
+    {"x": 3.20, "y": 17},
+    {"x": 4.00, "y": 15},
+    {"x": 2.80, "y": 22}
+]
+
+# Predictions for test data
+test_predictions = [weight * i['x'] + bias for i in test_data]
+
+print("Final weight:", weight)
+print("Final bias:", bias)
+print("Test predictions:", test_predictions)
+
+#output [15.665746860982782, 17.264835505939757, 14.866202538504295]
+```
 
 ## Hyperparameters
 

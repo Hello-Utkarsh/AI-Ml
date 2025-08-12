@@ -247,7 +247,7 @@ A **Random Variable** is a variable that takes on **numerical values** based on 
 
 There are **two main types**:
 
-### 1. **Discrete Random Variable**
+### 1. Discrete Random Variable
 
 - Takes **countable** values (like 0, 1, 2, 3, …).
 - Examples:
@@ -255,7 +255,7 @@ There are **two main types**:
   - Number of students in a class
 - Represented using a **Probability Mass Function (PMF)**.
 
-### 2. **Continuous Random Variable**
+### 2. Continuous Random Variable
 
 - Takes **uncountably infinite** values (within an interval).
 - Examples:
@@ -292,7 +292,7 @@ We know that when we toss 3 coins there can be total 4 outcomes, we get 0 Heads,
 
 ---
 
-## Binomial Distribution
+### Binomial Distribution
 
 A **Binomial Distribution** models the probability of getting **a fixed number of successes** in a fixed number of **independent** trials, where each trial has **two outcomes**: success or failure.
 
@@ -318,12 +318,36 @@ Where,
   \binom{n}{k} = \text{"n choose k" = number of ways to choose k successes from n trials}
   $$
 
-### Example:
+#### Example:
 
 Toss a biased coin **10 times** (n = 10), where the chance of getting heads (success) is 0.6 (p = 0.6).  
 What is the probability of getting exactly **4 heads**?
+
+So we have to choose only those outcomes where out of 10 coin tosses, 4 are heads, and that can be represented as $\binom{10}{4}$, which actually means $\frac{10!}{\text{(10-4)! * 4!}}$
 
 $$
 P(X = 4) =
 \binom{10}{4} \cdot 0.6^4 \cdot (0.4)^6
 $$
+
+### Bernoulli Distribution
+
+A **Bernoulli Distribution** models the probability of a **single trial** having one of **two outcomes**: success (1) or failure (0), with a fixed probability of success 𝑝
+
+It is essentially a **Binomial Distribution with number of trials(n)=1**.
+
+Conditions for Bernoulli Distribution
+
+- **Only one trial** (n = 1)
+- **Two outcomes** - Success(1) or Failure(0)
+- **constant Probability of success(p)**
+- **Independent Trial** (if considering multiple Bernoulli experiments)
+
+$$
+P(X) = p^x * (1-p)^{1-x}
+$$
+
+Where,
+- **p** = porbability of success
+- **1 - p** = porbability of failure
+- **x = 1** means Success, **x = 0** means failure
