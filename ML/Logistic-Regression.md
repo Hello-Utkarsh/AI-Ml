@@ -55,8 +55,6 @@ So the model predicts a probability of **0.731**.
 
 Log Loss is the error measure function used in **logistic regression**, which predicts probabilities (values between 0 and 1). Lower Log Loss means better predictions.
 
----
-
 ### Log Loss Formula
 
 For **one example** with true label $y\in\{0,1\}$ and predicted probability $\hat{y}\in(0,1)$:
@@ -69,8 +67,6 @@ $$\text{Log Loss}
   - $y=0$ means “negative”
 - $\hat{y}$: model’s predicted probability that $y=1$
 - $\ln(\cdot)$: natural logarithm (base $e\approx2.718$)
-
----
 
 ### Why Not Squared Loss?
 
@@ -91,8 +87,6 @@ Lets understand it with an example
    Loss = $-\ln(1 - \hat{y})$
    - If $\hat{y}\approx0$, $1-\hat{y}\approx1$ → small loss
    - If $\hat{y}\approx1$, $1-\hat{y}\to0$ → large loss
-
----
 
 ### Quick Numerical Example
 

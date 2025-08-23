@@ -348,6 +348,73 @@ P(X) = p^x * (1-p)^{1-x}
 $$
 
 Where,
-- **p** = porbability of success
-- **1 - p** = porbability of failure
+- **p** = probability of success
+- **1 - p** = probability of failure
 - **x = 1** means Success, **x = 0** means failure
+
+---
+### Continuous Distribution
+---
+### Cumulative Distribution
+
+- A **CDF** shows how much probability the variable has accumulated until a certain value  
+- It is defined as:  
+  - **Discrete case:**  
+    F(x) = P(X ≤ x) = Σ P(X = t), for all t ≤ x  
+  - **Continuous case:**  
+    F(x) = P(X ≤ x) = ∫ from -∞ to x of f(t) dt  
+
+- **Properties of CDF:**
+  - Starts at 0 and ends at 1.  
+  - Always non-decreasing.  
+  - Step-like shape for **discrete distributions**, smooth curve for **continuous distributions**.
+
+#### Example (discrete value):
+We have probabilities of a person’s height being a certain value:  
+
+- 72 → 0.2  
+- 73 → 0.4  
+- 74 → 0.3  
+- 75 → 0.1  
+
+**PMF Table**  
+
+| Height | Probability |
+|--------------|-------------|
+| 72        | 0.2         |
+| 73        | 0.4         |
+| 74        | 0.3         |
+| 75        | 0.1         |
+
+**CDF Table (cumulative sum):**  
+
+| Height ≤ x   | CDF Value |
+|--------------|-----------|
+| ≤73          | 0.2       |
+| ≤74          | 0.6       |
+| ≤75          | 0.9       |
+| ≤76          | 1.0       |
+
+![CDF Discrete Graph](./ML/assets/cdf_discrete_graph.png)
+
+So the CDF “builds up” probabilities step by step until it reaches **1**.
+
+#### Example (Continuous Value):  
+Two friends are talking. The conversation duration (in minutes) is a continuous random variable `X`.
+
+- From 0–1 min → Probability = 0.1  
+- From 1–2 min → Probability = 0.3  
+- From 2–3 min → Probability = 0.3  
+- From 3–4 min → Probability = 0.2  
+- From 4–5 min → Probability = 0.1
+![PDF Dataset](./ML/assets/cdf_pdf_graph.png)
+
+The CDF is the running total of probability up to a certain time.
+
+- P(X ≤ 1) = 0.1  
+- P(X ≤ 2) = 0.1 + 0.3 = 0.4  
+- P(X ≤ 3) = 0.4 + 0.3 = 0.7  
+- P(X ≤ 4) = 0.7 + 0.2 = 0.9  
+- P(X ≤ 5) = 0.9 + 0.1 = 1.0
+
+![CDF Continuous Graph](./ML/assets/cdf_continuous_graph.png)
