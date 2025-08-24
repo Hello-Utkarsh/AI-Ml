@@ -63,7 +63,7 @@ $$P(A \cup B) = P(A) + P(B) - P(A \cap B)$$
 #### Example:
 
 - Event A = {2, 4, 6} (even numbers)
-- Event $$B = {4, 5, 6} (greater than 3)
+- Event B = {4, 5, 6} (greater than 3)
 - Overlap: $$A \cap B = \{4, 6\}$$
 - So:  
   $$P(A) = \frac{3}{6},\quad P(B) = \frac{3}{6},\quad P(A \cap B) = \frac{2}{6}$$  
@@ -281,7 +281,7 @@ It tells us:
 #### Example (Tossing 3 coins):
 
 Let X = number of heads
-We know that when we toss 3 coins there can be total 4 outcomes, we get 0 Heads, 1 Heads, 2 Heads or 3 Heads
+We know that when we toss 3 coins there can be total 4 possible counts of head, we get 0 Heads, 1 Heads, 2 Heads or 3 Heads
 
 | X   | P(X)                |
 | --- | ------------------- |
@@ -354,6 +354,26 @@ Where,
 
 ---
 ### Continuous Distribution
+
+- A **continuous random variable** can take **any value** in a given range or interval (e.g., real numbers).  
+- Described using a **Probability Density Function (PDF)** \( f(x) \).  
+- Probability at an exact point is **zero**:  
+  $$
+  P(X = x) = 0
+  $$  
+  because the area of a single line segment is 0.  
+- Probability is defined over an **interval**:  
+  $$
+  P(a \leq X \leq b) = \int_a^b f(x)\, dx
+  $$  
+- The graph of the PDF is usually a **smooth curve**.  
+- The **total probability** over the entire range is always **1**:  
+  $$
+  \int_{-\infty}^{\infty} f(x)\, dx = 1
+  $$  
+The graph of Continuous Distribution usually looks like this
+
+![Continuous Distribution Graph](./ML/assets/cdf_pdf_graph.png)
 ---
 ### Cumulative Distribution
 
@@ -400,13 +420,8 @@ We have probabilities of a person’s height being a certain value:
 So the CDF “builds up” probabilities step by step until it reaches **1**.
 
 #### Example (Continuous Value):  
-Two friends are talking. The conversation duration (in minutes) is a continuous random variable `X`.
+Two friends are talking. The conversation duration (in minutes) is a continuous random variable `X`. This is how the graph of the pdf looks like
 
-- From 0–1 min → Probability = 0.1  
-- From 1–2 min → Probability = 0.3  
-- From 2–3 min → Probability = 0.3  
-- From 3–4 min → Probability = 0.2  
-- From 4–5 min → Probability = 0.1
 ![PDF Dataset](./ML/assets/cdf_pdf_graph.png)
 
 The CDF is the running total of probability up to a certain time.
@@ -470,3 +485,29 @@ and its **cdf graph** will be
 ![Uniform CDF Graph](./ML/assets/uf_cdf_graph.png)
 
 ---
+
+### Normal (Gaussain) Distribution
+
+- A distribution is called **Normal (Gaussian)** if it follows the bell-shaped curve, centered around the mean μ.  
+
+- Probability density function (PDF):  
+
+$$
+p(x) = \frac{1}{\sqrt{2\pi\sigma^2}} e^{-\frac{(x - \mu)^2}{2\sigma^2}}
+$$  
+
+where  
+- μ = mean (center of the distribution)  
+- σ² = variance (spread of the distribution)  
+
+- To transform any dataset into a standard normal distribution (mean = 0, variance = 1), we standardize it using:  
+
+$$
+z = \frac{x - \mu}{\sigma}
+$$  
+
+This process is called **standardization**. The resulting distribution is called the **Standard Normal Distribution**.
+
+This is how a standard normal (gaussian) distribution mostly looks like
+
+![Normal Gaussain Distribution](./ML/assets/gaussian_dist.png)
