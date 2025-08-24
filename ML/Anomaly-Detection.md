@@ -23,7 +23,7 @@ $$
 For data point $x$, calculate the likelihood under the Gaussian:
 
 $$
-p(x) = \frac{1}{\sqrt{2\pi\sigma^2}} \exp\left(-\frac{(x - \mu)^2}{2\sigma^2}\right)
+p(x) = \frac{1}{\sqrt{2\pi\sigma^2}}e^{\left(-\frac{(x - \mu)^2}{2\sigma^2}\right)}
 $$
 
 - High $p(x)$ means point is likely normal

@@ -418,3 +418,55 @@ The CDF is the running total of probability up to a certain time.
 - P(X ≤ 5) = 0.9 + 0.1 = 1.0
 
 ![CDF Continuous Graph](./ML/assets/cdf_continuous_graph.png)
+
+---
+
+### Uniform Distribution
+
+A **uniform distribution** is a probability distribution in which all outcomes in the range are equally likely.
+
+There are two types:
+
+#### Discrete Uniform Distribution
+- Example: rolling a fair die (values \(1,2,3,4,5,6\)).  
+- Each outcome has probability:
+
+$$
+P(X = x) = \frac{1}{n}, \quad x \in \{a, a+1, \dots, b\}
+$$
+
+where \(n = (b-a+1)\) is the number of possible outcomes.
+
+
+#### Continuous Uniform Distribution
+- Example: choosing a random number between \(a\) and \(b\).  
+- Probability density function (PDF):
+
+$$
+f(x) = 
+\begin{cases}
+\frac{1}{b-a}, & a \leq x \leq b \\
+0, & \text{otherwise}
+\end{cases}
+$$
+
+#### Cumulative Distribution Function (CDF)
+
+$$
+F(x) =
+\begin{cases}
+0, & x < a \\
+\frac{x-a}{b-a}, & a \leq x \leq b \\
+1, & x > b
+\end{cases}
+$$
+
+So lets say there is a continuous variable which start from a and end at b, and all intervals of the same length have proportional probability of $\frac{1}{b-a}$ then its **pdf graph** will look something like this
+
+![Uniform Probability Distribution Function](./ML/assets/uf_contidf_graph.png)
+
+and its **cdf graph** will be
+
+![Uniform CDF Graph](./ML/assets/uf_cdf_graph.png)
+
+---
