@@ -191,13 +191,13 @@ $\frac{1}{M}\sum_{i=1}^M \bigl(\text{actual value} - \text{predicted value})^2$
 #### c. Compute gradients (“slopes” of the loss surface)
 
 **Weight derivative**  
-$\frac{\partial J}{\partial w} = \frac{1}{M}\sum_{i=1}^M \bigl[\,2\,(\text{predicted value} - \text{actual value})]$
+$\frac{\partial J}{\partial w} = \frac{2}{M}\sum_{i=1}^M \bigl[(\text{predicted value} - \text{actual value}) \cdot x^i]$
 
 - $x_i$: feature value for example $i$
 - The factor 2 comes from differentiating the square $(\text{predicted value} - \text{actual value})^2$.
 
 **Bias derivative**  
-$\frac{\partial J}{\partial b} = \frac{1}{M}\sum_{i=1}^M \bigl[\,2\,(\text{predicted value} - \text{actual value})\bigr]$
+$\frac{\partial J}{\partial b} = \frac{2}{M}\sum_{i=1}^M \bigl[(\text{predicted value} - \text{actual value})\bigr]$
 
 - No $x_i$ term because $b$ shifts the prediction by a constant amount for every example.
 
