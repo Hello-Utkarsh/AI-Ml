@@ -155,3 +155,140 @@ Now we update both user and movie parameters with gradient descent:
 - $w^j = w^j - \alpha \frac{\partial}{\partial{w^j}}$
 - $b^j = b^j - \alpha \frac{\partial}{\partial{b^j}}$
 - $x^i = x^i - \alpha \frac{\partial}{\partial{x^i}}$
+
+## From Ratings to Binary Feedback in Recommender Systems
+
+In theory, we can predict what rating a user might give to a movie by learning from movie features and past ratings.
+But in practice — how many times have you actually rated a movie on Netflix, a product on Amazon, or a song on Spotify?
+**Very rarely.**
+
+#### The Reality
+
+In the real world, explicit ratings are scarce. Most users never give star ratings. Instead, platforms rely on implicit signals:
+
+- Did the user like the movie or not?
+- Did they wishlist or bookmark it?
+- Did they watch the full trailer or leave early?
+- Did they replay a song multiple times?
+
+These actions provide binary labels:
+- 1 → user liked/engaged with the item
+- 0 → user did not like/disengaged
+- ? → user has not interacted yet
+
+| Movie             | Alice(1) | Bob(2) | Carol(3) | David(4) |
+| ----------------- | -------: | -----: | -------: | -------: |
+| La La Land(1)     |        1 |      0 |        1 |        ? |
+| Titanic(2)        |        1 |      ? |        ? |        0 |
+| The Notebook(3)   |        ? |      0 |        1 |        ? |
+| Fast & Furious(4) |        0 |      1 |        0 |        1 |
+| F1: The Movie(5)  |        0 |      1 |        0 |        1 |
+
+### Logistic Regression in Recommender Systems
+
+For a user $j$ and a movie $i$, we first compute a **linear score**:  
+
+$$
+z^{(i,j)} = w^j \cdot x^i + b^j
+$$  
+
+- $w^j$: user’s preference weights  
+- $x^i$: movie’s feature vector (learned or predefined)  
+- $b^j$: user bias  
+
+To convert $z$ into a probability between 0 and 1, we apply the **sigmoid function**:  
+
+$$
+\hat{y}^{(i,j)} = \frac{1}{1 + e^{-z^{(i,j)}}}
+$$  
+
+- $\hat{y}^{(i,j)}$: probability that user $j$ will like movie $i$
+
+The model is trained using the **log loss** (cross-entropy loss).  
+
+For a single user–movie pair $(i,j)$ with true label $y^{(i,j)}$:  
+
+$$
+L(\hat{y}^{(i,j)}, y^{(i,j)}) = -\Bigl[ \hat{y}^{(i,j)} \cdot \ln(\hat{y}^{(i,j)}) + (1 - \hat{y}^{(i,j)}) \cdot \ln(1-\hat{y}^{(i,j)}) \Bigr]$$
+
+- If $y=1$, loss is small only when $y^{(i,j)}$ is close to 1.  
+- If $y=0$, loss is small only when $y^{(i,j)}$ is close to 0.
+
+Summing over all known interactions:  
+
+$$
+J(w,b,x) = \sum_{(i,j):r(i,j)=1} L(\hat{y}^{(i,j)}, y^{(i,j)})
+$$
+
+## Mean Normalization in Recommender Systems
+
+### Problem: User Rating Bias
+
+Different users have different rating habits that can bias the recommendation model:
+
+- **Generous raters**: Frequently give 4-5 star ratings
+- **Strict raters**: Rarely exceed 3 stars, even for items they enjoy
+- **Conservative raters**: Tend to rate around the middle (2-3 stars)
+
+Without accounting for these differences, the model may incorrectly learn that a "3" from a strict rater means the same as a "3" from a generous rater.
+
+### Solution: Mean Normalization
+
+Mean normalization adjusts each user's ratings relative to their personal average, removing individual rating bias.
+
+#### Step 1: Calculate User Means
+
+For each user j, compute their average rating:
+
+$$\mu^j = \frac{1}{|R_j|} \sum_{i \in R_j} y^{(i,j)}$$
+
+Where:
+- $R_j$ = set of items rated by user j
+- $|R_j|$ = number of items rated by user j
+- $y^{(i,j)}$ = actual rating given by user j to item i
+
+#### Step 2: Normalize Training Data
+
+Transform the ratings by subtracting the user mean:
+
+$$y'^{(i,j)} = y^{(i,j)} - \mu^j$$
+
+**Example**:
+- Alice (generous rater): μ¹ = 4.2
+- Bob (strict rater): μ² = 2.1
+- Both rate a movie as "3"
+- Normalized: Alice = 3 - 4.2 = -1.2, Bob = 3 - 2.1 = +0.9
+- Now the model learns Alice disliked it, Bob liked it!
+
+#### Step 3: Train on Normalized Data
+
+Use the normalized ratings in the cost function:
+
+$$J(w,b,x) = \frac{1}{2} \sum_{i,j:r(i,j)=1} \big( w^j \cdot x^i + b^j - y'^{(i,j)} \big)^2 + \text{regularization}$$
+
+#### Step 4: Make Predictions
+
+When predicting for user j on item i, add back the user's mean:
+
+$$\hat{y}^{(i,j)} = (w^j \cdot x^i + b^j) + \mu^j$$
+
+### Benefits
+
+1. **Removes rating bias**: Model learns relative preferences, not absolute scales
+2. **Improves accuracy**: Better captures true user preferences
+3. **Fair comparisons**: Generous and strict raters are normalized to the same scale
+4. **Stable training**: Reduces variance in the training data
+
+### Limitations
+
+1. **Doesn't solve cold-start**: New users have no rating history, so μʲ is undefined
+2. **Requires sufficient ratings**: Users with very few ratings may have unreliable means
+3. **Static normalization**: Doesn't adapt as user preferences evolve over time
+
+### Alternative: Global Mean for New Users
+
+For users with insufficient rating history:
+
+$$\mu^j = \frac{1}{N} \sum_{i,j:r(i,j)=1} y^{(i,j)}$$
+
+Where N is the total number of known ratings across all users.
