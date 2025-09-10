@@ -41,29 +41,34 @@ Each feature is scaled between 0 and 1.
 ### Notation  
 
 - Indicator for rating availability
-  $$
-  r(i,j) =
-  \begin{cases}
-  1 & \text{if viewer j has rated movie i} \\
-  0 & \text{otherwise}
-  \end{cases}
-  $$
+$$
+r(i,j) =
+\begin{cases}
+1 & \text{if viewer j has rated movie i} \\
+0 & \text{otherwise}
+\end{cases}
+$$
 
 - Actual rating
-  $$ y(i,j) = \text{rating given by viewer } j \text{ to movie } i $$  
-
+$$
+y(i,j) = \text{rating given by viewer } j \text{ to movie } i
+$$
 - Movie features
-  $$ x^i = \begin{bmatrix}x_1^i \\ x_2^i \end{bmatrix} $$  
+$$
+x^i = \begin{bmatrix}x_1^i \\ x_2^i \end{bmatrix}
+$$
 
 **Examples:**  
-- $ r(5,1) = 0 \;\Rightarrow\; $ Alice has **not** rated the 5th movie, so $y(5,1)$ is undefined.  
-- $ r(5,4) = 1 \;\Rightarrow\; $ David **has** rated the 5th movie, so $y(5,4) = 5$.  
+- $r(5,1) = 0 \;\Rightarrow\;$ Alice has **not** rated the 5th movie, so $y(5,1)$ is undefined.  
+- $r(5,4) = 1 \;\Rightarrow\;$ David **has** rated the 5th movie, so $y(5,4) = 5$.  
 
-## How Predictions Work
+### How Predictions Work
 
 For each user $j$, we learn a weight vector $w^j$ and bias $b^j$:
 
-$$ y^{i,j} = w^j \cdot x^i + b^j $$
+$$
+y^{i,j} = w^j \cdot x^i + b^j
+$$
 This models how much the user cares about romance vs. action.
 Example: Suppose Alice’s preferences are
 $w^1 = \begin{bmatrix}5\\0\end{bmatrix}$
@@ -73,13 +78,15 @@ This means:
 - She doesn’t care about action (weight = 0)
 
 
-$$ w^1 = \begin{bmatrix}5 \\ 0\end{bmatrix}, \quad b^1 = 0 $$  
+$$
+w^1 = \begin{bmatrix}5 \\ 0\end{bmatrix}, \quad b^1 = 0
+$$
 
 This means:  
 - She cares a lot about **romance** ($5$)  
 - She does not care about **action** ($0$)  
 
-Now, The Notebook has features $ x^3 = \begin{bmatrix}0.99 \\ 0\end{bmatrix} $  
+Now, The Notebook has features $x^3 = \begin{bmatrix}0.99 \\ 0\end{bmatrix}$  
 
 Prediction:
 
@@ -113,6 +120,72 @@ J(\{w^j, b^j\})
 $$  
 
 ---
+
+### Neural Network Based Approach
+
+The linear model we discussed above is mainly a toy example to build intuition. It shows how user preferences and movie features can interact, but it’s too simplistic for real-world recommender systems.
+
+#### Feature Vectors for Users and Movies
+
+- **User vector**: $v_u^j$ → contains features about a user (e.g., age, gender, country, genres they like).  
+- **Item (movie) vector**: $v_m^i$ → contains features about a movie (e.g., year, country, genre, average rating, number of reviews).
+
+These two vectors can be of **different sizes** (different number of features).
+
+#### Neural Network Embeddings
+
+- A **dense neural network** is applied separately to user features and item features.  
+- Each network compresses its input into a **latent representation (embedding)**:  
+- Importantly, both embeddings are designed to be of the **same size**, so we can compare them.
+
+#### Prediction Step  
+
+Once we have embeddings, the **predicted rating or preference** is a dot product between user and item embeddings.
+
+$$
+\hat{y}_{u,m} = v_u^j \cdot v_m^i
+$$  
+
+#### Training Objective  
+
+We compare predicted rating with actual rating:  
+
+$$
+J = \frac{1}{M} \sum_{(u,m)} \bigl( \hat{y}_{u,m} - y_{u,m} \bigr)^2
+$$  
+
+This is the **Mean Squared Error (MSE)** cost function.  
+We minimize it using **gradient descent** to learn neural network weights.  
+
+#### Similarity Between Items  
+
+If we want to find movies similar to a given movie $m^j$, we can compare embeddings using distance:  
+
+$$
+\text{similarity}(m^j, m^k) = \lVert v_m^j - v_m^k \rVert^2
+$$  
+
+Smaller values = more similar movies.  
+We can then pick the top 5 or 10 closest ones.  
+
+### Retrieval and Ranking  
+
+Modern recommenders work in **two stages**:  
+
+### 🔹 Retrieval  
+- From millions of items, retrieve a smaller candidate set (say 500–1000).  
+- Done using **embeddings** + fast similarity search (dot product, cosine, ANN search).  
+- Goal = **speed & coverage**, not perfect accuracy.  
+
+Example: Netflix retrieves 500 relevant movies out of 50,000.  
+
+### 🔹 Ranking  
+- Take the retrieved candidates and **rank them in order of preference**.  
+- Uses richer features: user profile, item metadata, and context.  
+- More complex models (deep nets, boosted trees) are used.  
+- Goal = **personalization & accuracy**.  
+
+Example: Netflix re-ranks those 500 and shows you the top 10 on your homepage. 
 
 ## Collaborative Filtering
 
@@ -264,7 +337,7 @@ $$y'^{(i,j)} = y^{(i,j)} - \mu^j$$
 
 Use the normalized ratings in the cost function:
 
-$$J(w,b,x) = \frac{1}{2} \sum_{i,j:r(i,j)=1} \big( w^j \cdot x^i + b^j - y'^{(i,j)} \big)^2 + \text{regularization}$$
+$$J(w,b,x) = \frac{1}{2} \sum_{i,j:r(i,j)=1} \big( w^j \cdot x^i + b^j - y'^{(i,j)} \big)^2$$
 
 #### Step 4: Make Predictions
 
