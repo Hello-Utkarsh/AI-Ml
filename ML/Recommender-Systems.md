@@ -173,20 +173,67 @@ We can then pick the top 5 or 10 closest ones.
 
 Modern recommenders work in **two stages**:  
 
-### 🔹 Retrieval  
+#### 🔹 Retrieval  
 - From millions of items, retrieve a smaller candidate set (say 500–1000).  
 - Done using **embeddings** + fast similarity search (dot product, cosine, ANN search).  
 - Goal = **speed & coverage**, not perfect accuracy.  
 
 Example: Netflix retrieves 500 relevant movies out of 50,000.  
 
-### 🔹 Ranking  
+#### 🔹 Ranking  
 - Take the retrieved candidates and **rank them in order of preference**.  
 - Uses richer features: user profile, item metadata, and context.  
 - More complex models (deep nets, boosted trees) are used.  
 - Goal = **personalization & accuracy**.  
 
-Example: Netflix re-ranks those 500 and shows you the top 10 on your homepage. 
+Example: Netflix re-ranks those 500 and shows you the top 10 on your homepage.
+
+### Principal Component Analysis (PCA)
+
+PCA is a **dimensionality reduction** technique.  It helps us reduce the number of features while still keeping most of the important information.
+
+#### Why PCA?
+
+- In real systems, products/movies/users can have **hundreds of features**.
+- Many features are **correlated**. Suppose users rate movies based on two correlated features:
+  - "Action level" and "Violence level" (highly correlated)
+  - PCA might find PC1: "Intensity" (combines action + violence)  
+- PCA combines correlated features into fewer **principal components**, reducing computation while preserving patterns.
+
+#### Intuition
+
+- PCA finds **new axes (directions)** in the data where:
+  - Data variance is **maximum** (spread out).
+  - Axes are **uncorrelated**.
+- We project the original data onto these new axes.
+- The first principal component captures the most variance, the second captures the next, etc.
+
+We want axes where data is **spread out** because:
+- Spread-out data = more variation = more information.
+- Squished data = low variation = less information.
+
+Below is a simple implementation of PCA
+
+```python
+import numpy as np
+from sklearn.decomposition import PCA
+
+# Data: 5 samples, 2 features
+a = np.array([
+    [2, 5],
+    [3, 7],
+    [4, 6],
+    [5, 9],
+    [6, 8]
+])
+
+# PCA to reduce from 2D → 1D
+pca = PCA(n_components=1)
+x_trans = pca.fit_transform(a)
+
+print(x_trans)
+# Output: [[ 2.82842712], [ 0.70710678], [ 0.70710678], [-2.12132034], [-2.12132034]] 
+```
 
 ## Collaborative Filtering
 
@@ -325,7 +372,7 @@ Where:
 
 Transform the ratings by subtracting the user mean:
 
-$$y'^{(i,j)} = y^{(i,j)} - \mu^j$$
+$$\hat{y}^{(i,j)} = y^{(i,j)} - \mu^j$$
 
 **Example**:
 - Alice (generous rater): μ¹ = 4.2
@@ -359,7 +406,7 @@ $$\hat{y}^{(i,j)} = (w^j \cdot x^i + b^j) + \mu^j$$
 2. **Requires sufficient ratings**: Users with very few ratings may have unreliable means
 3. **Static normalization**: Doesn't adapt as user preferences evolve over time
 
-### Alternative: Global Mean for New Users
+#### Alternative: Global Mean for New Users
 
 For users with insufficient rating history:
 
