@@ -41,22 +41,20 @@ Each feature is scaled between 0 and 1.
 ### Notation  
 
 - Indicator for rating availability
-$$
+```math
 r(i,j) =
 \begin{cases}
 1 & \text{if viewer j has rated movie i} \\
 0 & \text{otherwise}
 \end{cases}
-$$
+```
 
 - Actual rating
-$$
-y(i,j) = \text{rating given by viewer } j \text{ to movie } i
-$$
+$$y(i,j) = \text{rating given by viewer } j \text{ to movie } i$$
 - Movie features
-$$
+```math
 x^i = \begin{bmatrix}x_1^i \\ x_2^i \end{bmatrix}
-$$
+```
 
 **Examples:**  
 - $r(5,1) = 0 \;\Rightarrow\;$ Alice has **not** rated the 5th movie, so $y(5,1)$ is undefined.  
@@ -66,35 +64,38 @@ $$
 
 For each user $j$, we learn a weight vector $w^j$ and bias $b^j$:
 
-$$
-y^{i,j} = w^j \cdot x^i + b^j
-$$
+$$y^{i,j} = w^j \cdot x^i + b^j$$
 This models how much the user cares about romance vs. action.
 Example: Suppose Alice’s preferences are
-$w^1 = \begin{bmatrix}5\\0\end{bmatrix}$
+```math 
+w^1 = \begin{bmatrix}5\\0\end{bmatrix}
+```
 This means:
 
 - She loves romance (weight = 5)
 - She doesn’t care about action (weight = 0)
 
 
-$$
+```math
 w^1 = \begin{bmatrix}5 \\ 0\end{bmatrix}, \quad b^1 = 0
-$$
+```
 
 This means:  
 - She cares a lot about **romance** ($5$)  
 - She does not care about **action** ($0$)  
 
-Now, The Notebook has features $x^3 = \begin{bmatrix}0.99 \\ 0\end{bmatrix}$  
+Now, The Notebook has features 
+```math
+x^3 = \begin{bmatrix}0.99 \\ 0\end{bmatrix}
+```
 
 Prediction:
 
-$$
+```math
 y^{i,j} = \begin{bmatrix} 5 \\ 0 \end{bmatrix} \cdot 
 \begin{bmatrix} 0.99 \\ 0 \end{bmatrix} + 0
 = 4.95
-$$  
+```
 
 ✅ Predicted rating = **4.95**  
 
