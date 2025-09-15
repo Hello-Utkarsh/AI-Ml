@@ -48,7 +48,7 @@ To fit a straight line through two points $(x₁, y₁)$ and $(x₂, y₂)$, we 
      y = 30.495 + (-3.57)x
      ```
   4. To predict MPG for a 4,000-pound car ($x = 4.00$):
-     $ y = 30.495 + (-3.57)·4.00= 30.495 - 14.28= 16.215$
+     $y = 30.495 + (-3.57)·4.00= 30.495 - 14.28= 16.215$
      So, approximately 16.2 MPG.
 
 > **Note:** In practice, when fitting a model on many data points, weight and bias are found by minimizing a cost function (e.g., mean squared error) across all points, not just two. The above illustrates how slope and bias relate to any two points on a straight line.
